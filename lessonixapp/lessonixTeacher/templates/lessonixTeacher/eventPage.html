@@ -1,0 +1,55 @@
+{% extends 'main.html' %}
+
+{% load static %}
+
+{% block content %}
+
+<div id="start-lesson-page" class="container">
+    <div id="header-div" class="header-container">
+        <img src="{% static 'img/small_class_ico.png' %}" alt="Event Icon" class="event-image-topbar"> <!-- Replace with your image URL -->
+        <div class="event-content">
+            <p class="event-name-time-topbar">{{name}}, {{time}}</p>
+            <p class="event-started-topbar">{{started}}</p>
+        </div>
+    </div>
+
+    <div class="flex-container"> <!-- Added a flex container for layout -->
+        <div id="today-statistics" class="statistics-container">
+            <div class="statistic-label">
+                <h1>Присутні</h1>
+
+                {% for person in persons %}
+                <div class="person">
+                    <img src="{% static 'img/student_ico.png' %}" alt="Person Icon" class="person-icon">
+                    <a class="person-name">
+                        <p class="person-name">{{ forloop.counter }}. {{ person }}</p>
+                    </a>
+                </div>
+                {% endfor %}
+
+            </div>
+            
+        </div>
+
+        <div id="schedule" class="schedule-container"> <!-- New Schedule Div -->
+            <div class="schedule-label">
+                <h1>QR для аунтифікації</h1>
+            </div>
+            <div class="schedule-content">
+                {% if started == "Триває" %}
+                <div class="qr-code-event">
+                    <img src="data:image/png;base64,{{ qr_code }}" alt="QR Code">
+                </div>
+                {% elif started == "Не розпочато"%}
+                <p>Розпочніть захід для QR</p>
+                {% else %}
+                <p>Захід завершено</p>
+                {% endif %}
+            </div>
+            <a id="start-lesson-btn" class="start-button" href="{% url 'eventAction' eventHash=hash %}" >{{ actionButton }}</a> <!-- Moved the button here -->
+        </div>
+    </div>
+    
+</div>
+
+{% endblock content %}

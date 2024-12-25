@@ -1,0 +1,13 @@
+{% extends 'main.html' %}
+
+{% block content %}
+<h1>Додати кабінет</h1>
+<div class="add-cabinet">
+    <form action="{% url 'add_cabinet' %}" method="POST">
+        {% csrf_token %}
+        <label for="cab_num">Номер кабінету:</label>
+        <input type="text" id="cab_num" name="cab_num" required>
+        <button type="submit">Додати кабінет</button>
+    </form>
+</div>
+{% endblock content %}

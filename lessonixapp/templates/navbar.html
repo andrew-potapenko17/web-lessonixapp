@@ -1,0 +1,75 @@
+{% load static %}
+
+<nav class="sidebar">
+    <div class="navbar-content">
+        <div class="main-ico">
+            <a href="/">
+                <img src="{% static 'img/mainpage_ico.png' %}" alt="Main Icon">
+            </a>
+        </div>
+
+        <div class="links-container">
+            {% if request.session.uid %}
+            <div class="buttons-container">
+                {% if request.session.role == "teacher" %}
+                <a href="{% url 'my_school' %}">
+                    <p class="button">Моя школа</p>
+                </a>
+                <a href="{% url 'my_classes' %}">
+                    <p class="button">Класи</p>
+                </a>
+                <a href="{% url 'myclass' %}">
+                    <p class="button">Мій клас</p>
+                </a>
+                <a href="{% url 'start_lesson_page' %}">
+                    <p class="button">Уроки</p>
+                </a>
+                <a href="{% url 'reports' %}">
+                    <p class="button">Журнали</p>
+                </a>
+                {% if request.session.lvl >= 2 %}
+                <a href="{% url 'events' %}">
+                    <p class="button">Заходи</p>
+                </a>
+                {% endif %}
+                {% elif request.session.role == "med" %}
+                <a href="{% url 'my_school' %}">
+                    <p class="button">Моя школа</p>
+                </a>
+                <a href="{% url 'medcab' %}">
+                    <p class="button">Мед. Кабінет</p>
+                </a>
+                <a href="{% url 'home' %}">
+                    <p class="button">Мед. Журнал</p>
+                </a>
+                {% endif %}
+            </div>
+            <div class="sidebar-bottom">
+                <div class="profile-container">
+                    <a href="/">
+                        <img class="profile-img" src="{% static 'img/student_ico.png' %}" alt="Profile Icon">
+                    </a>
+                    <p class="full-name">{{ request.session.full_name }}</p>
+                    <a href="https://vm.tiktok.com/ZMkjXrXDY/">
+                        <img class="logout-img" src="{% static 'img/logout-btn.png' %}" alt="Logout Button">
+                    </a>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+        {% if not request.session.uid %}
+        <div class="auth-links">
+            <div class="auth-link">
+                <a href="{% url 'login' %}">
+                    <p>Увійти</p>
+                </a>
+            </div>
+            <div class="auth-link">
+                <a href="{% url 'register' %}">
+                    <p>Зареєструватись</p>
+                </a>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</nav>

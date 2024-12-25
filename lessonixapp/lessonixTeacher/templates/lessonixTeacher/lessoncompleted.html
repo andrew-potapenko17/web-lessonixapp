@@ -1,0 +1,71 @@
+{% extends 'main.html' %}
+{% load static %}
+
+{% block content %}
+    <div class="lesson-cp-page">
+        <div class="header-container">
+            <h1>Урок завершено</h1>
+            <p class="thank-you-text">Дякуємо, що користуєтесь Lessonix!</p>
+        </div>
+
+        <div class="lesson-statistics">
+            <h2>Статистика за урок</h2>
+            <a id="download-txt-btn">
+                <img src="{% static 'img/save-ico.png' %}" alt="Save Icon">
+            </a>
+            <p>Кабінет: <strong>{{ cabinet }}</strong></p>
+            <p>Клас: <strong>{{ class_name }}</strong></p>
+            <p>Предмет: <strong>{{ subject }}</strong></p>
+            <p>Кількість учнів, які були на уроці: <strong>{{ present_count }}</strong></p>
+            <p>Кількість учнів, які були відмічені як хворі: <strong>{{ ill_count }}</strong></p>
+            <p>Кількість учнів, які не були присутніми на уроці: <strong>{{ absent_count }}</strong></p>
+            <p><strong>Тривалість уроку:</strong> {{ duration }} </p>
+        </div>
+
+        <div class="attendance-report">
+            <div class="report-container">
+                <h2>Таблиця відвідуваності:</h2>
+                <a id="download-xlsx-btn">
+                    <img src="{% static 'img/save-ico.png' %}" alt="Save Icon">
+                </a>
+                {% if report_data %}
+                    <table class="report-table">
+                        <thead>
+                            <tr>
+                                <th>Ім'я учня</th>
+                                <th>Статус</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for student in report_data %}
+                                <tr>
+                                    <td>{{ student.full_name }}</td>
+                                    <td>{{ student.status|default:"&nbsp;" }}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                {% else %}
+                    <p>Немає інформації про відвідуваність.</p>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="lesson-logs">
+            <h2>Логи уроку</h2>
+            <p>На даний момент логи недоступні.</p>
+        </div>
+
+        <div class="go-home">
+            <a href="{% url 'home' %}" class="btn btn-primary">На головну</a>
+        </div>
+    </div>
+
+    <script>
+        let downloadTxtUrl = "{% url 'download_txt' %}";
+        let downloadXlxsUrl = "{% url 'download_xlsx' %}";
+    </script>
+    
+    <script src="{% static 'js/downloadlessonstatistic.js' %}"></script>
+    <script src="{% static 'js/downloadlessonatendence.js' %}"></script>
+{% endblock %}

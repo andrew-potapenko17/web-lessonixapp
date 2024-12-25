@@ -1,0 +1,50 @@
+{% extends 'main.html' %}
+
+{% load static %}
+
+{% block content %}
+
+<div class="home-container">
+    <h1 id="main-title">Вітаємо в Lessonix!</h1>
+
+    <div class="calendar-container" id="calendar-container">
+        <!-- Calendar squares will be injected here -->
+    </div>
+
+    <div class="flex-container"> <!-- New parent div for flex layout -->
+        <div class="community-container">
+            <h2>Спільнота вашої школи:</h2>
+            
+            <div class="messages-container">
+                {% for message in messagesc %}
+                    <div class="message">
+                        <p><strong>{{ message.full_name }}</strong></p>
+                        <p>{{ message.text }}</p>
+                        <p class="timestamp">{{ message.created }}</p>
+                    </div>
+                {% endfor %}
+            </div>
+            <div class="form-container">
+                <form action="{% url 'post_message' %}" method="POST">
+                    {% csrf_token %}
+                    <input type="text" name="message" placeholder="Написати в спільноту..." required />
+                    <button type="submit">Надіслати</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="schedule-container"> <!-- New Schedule Div -->
+            <div class="schedule-label">
+                <h2>Розклад</h2>
+            </div>
+            <div class="schedule-content">
+                <p>Розклад недоступний</p> <!-- Schedule unavailable text -->
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="{% static 'js/homepageCalendar.js' %}"></script>
+
+{% endblock content %}

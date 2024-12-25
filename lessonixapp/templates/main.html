@@ -1,0 +1,43 @@
+<!DOCTYPE>
+{% load static %}
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Lessonix</title>
+
+    <link rel="icon" type="image/png" href="{% static 'img/tab_ico.png' %}" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" href="{% static 'styles/main.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/login_register.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/homepage.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/lesson.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/lessoncompleted.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/medcabinet.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/navbar.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/table.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/welcomepage.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/classes.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/teachers.css' %}" />
+    <link rel="stylesheet" href="{% static 'styles/startlessonpage.css' %}">
+
+</head>
+
+<body>
+    {% include 'navbar.html' %}
+
+    <div class="main-content">
+        {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+
+        {% block content %}
+        {% endblock %}
+    </div>
+
+</body>
+</html>

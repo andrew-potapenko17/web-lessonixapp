@@ -1,0 +1,97 @@
+/* Welcome Page Styles */
+
+.welcome-page {
+    padding: 20px;
+    background-color: #f9f9f9;
+    font-family: Arial, sans-serif;
+}
+
+.upper-div {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.upper-div h1 {
+    font-size: 3em;
+    color: #4CAF50;
+}
+
+.upper-div p {
+    font-size: 1.2em;
+    color: #333;
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.features-section, .about-section, .testimonial-section, .cta-section {
+    margin-bottom: 40px;
+    text-align: center;
+}
+
+.features-section h2, .about-section h2, .testimonial-section h2, .cta-section h2 {
+    font-size: 2.2em;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.features-section ul {
+    list-style: none;
+    padding: 0;
+}
+
+.features-section li {
+    font-size: 1.2em;
+    color: #555;
+    margin: 10px 0;
+}
+
+.about-section p {
+    font-size: 1.1em;
+    color: #555;
+    max-width: 800px;
+    margin: 10px auto;
+    line-height: 1.6;
+}
+
+.testimonial-section blockquote {
+    font-size: 1.1em;
+    font-style: italic;
+    color: #555;
+    border-left: 5px solid #4CAF50;
+    padding-left: 20px;
+    margin: 20px auto;
+    max-width: 700px;
+}
+
+.testimonial-section cite {
+    display: block;
+    font-size: 1em;
+    color: #999;
+    margin-top: 10px;
+}
+
+.cta-section {
+    background-color: #4CAF50;
+    padding: 20px;
+    color: #fff;
+    text-align: center;
+}
+
+.cta-section p {
+    font-size: 1.3em;
+    margin-bottom: 20px;
+}
+
+.cta-section .btn {
+    background-color: #fff;
+    color: #4CAF50;
+    border: none;
+    padding: 10px 20px;
+    font-size: 1.2em;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+
+.cta-section .btn:hover {
+    background-color: #e7e7e7;
+}

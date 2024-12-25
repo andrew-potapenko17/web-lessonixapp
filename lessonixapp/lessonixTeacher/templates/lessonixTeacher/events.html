@@ -1,0 +1,95 @@
+{% extends 'main.html' %}
+
+{% load static %}
+
+{% block content %}
+
+<div id="start-lesson-page" class="container">
+    <div id="header-div" class="header-container">
+        <div class="header-left">
+            <h1>Заходи</h1>
+        </div>
+        <div class="header-right">
+            <div id="day-date" class="flex-row">
+                <div id="day"></div>
+                <div id="date"></div>
+            </div>
+            <div id="current-time"></div>
+        </div>
+    </div>
+
+    <div class="flex-container"> <!-- Added a flex container for layout -->
+        <div id="today-statistics" class="statistics-container">
+            <div class="statistic-label">
+                <h1>Мої заходи</h1>
+
+                {% for event in user_events %}
+                    <div class="event">
+                        <img src="{% static 'img/small_class_ico.png' %}" alt="Event Icon"> <!-- Replace with your image URL -->
+                        <div class="event-content">
+                            <p class="event-name-time">{{ event.name }}, {{ event.time }}</p>
+                            <p class="event-started">{{ event.started }} </p>
+                        </div>
+                        <a class="event-button" href="{% url 'eventPage' eventHash=event.hash %}">Перейти →</a>
+                    </div>
+                {% endfor %}
+
+            </div>
+            
+        </div>
+
+        <div id="schedule" class="schedule-container"> <!-- New Schedule Div -->
+            <div class="schedule-label">
+                <h1>Розклад</h1>
+            </div>
+            <div class="schedule-content">
+                <p>Розклад недоступний</p> <!-- Schedule unavailable text -->
+            </div>
+            <button id="start-lesson-btn" class="start-button" onclick="openModal()">Створити захід</button> <!-- Moved the button here -->
+        </div>
+    </div>
+
+    <div id="slm" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="close" onclick="closeModal()">&times;</span>
+                <h1>Створити захід</h1>
+            </div>
+            <form method="post" action="{% url 'events' %}">
+                {% csrf_token %}
+                <div class="list-container">
+                    <label for="class">Тема:
+                    </label>
+                    <input type="text" name="topic" placeholder="" required />
+                </div>
+    
+                <div class="list-container">
+                    <label for="cabinet">Кабінет:
+                        <img src="{% static 'img/plus-btn.png' %}" alt="Add Cabinet" onclick="window.location.href='{% url 'add_cabinet' %}'">
+                    </label>
+                    <select name="cabinet" id="cabinet-select">
+                        {% for cabinet in user_cabs %}
+                            <option value="{{ cabinet }}">{{ cabinet }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+    
+                <div class="list-container">
+                    <label for="subject">Початок:
+                    </label>
+                    <input type="text" name="time" placeholder="Наприклад: 18:00" required />
+                </div>
+    
+                <div class="modal-footer">
+                    <button type="submit" class="start-button">Створити захід</button>
+                </div>
+            </form>           
+        </div>
+    </div>
+    
+</div>
+
+<script src="{% static 'js/startlessonpage.js' %}"></script>
+<script src="{% static 'js/startlessonpageTime.js' %}"></script>
+
+{% endblock content %}

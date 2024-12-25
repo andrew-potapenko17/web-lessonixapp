@@ -1,0 +1,10 @@
+{% extends 'main.html' %}
+
+{% block content %}
+<div class="profile-container">
+    <h1>{{ user.full_name }}</h1>
+    <p>E-mail: {{ user.email }}</p>
+    <p>Школа: {{ school_name }}</p>
+    <p>Класи: {{ user.classes }}</p>
+</div>
+{% endblock content %}

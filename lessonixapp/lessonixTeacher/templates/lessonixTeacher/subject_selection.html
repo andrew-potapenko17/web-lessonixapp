@@ -1,0 +1,49 @@
+{% extends 'main.html' %}
+
+{% load static %}
+
+{% block content %}
+<div class="header-container">
+    <div class="reports-header-container">
+        <h1 class="reports-header">{{class_name}}</h1>
+        <div class="reports-icon">
+            <img src="{% static 'img/reports-ico.png' %}" alt="Class Icon">
+        </div>
+    </div>
+</div>
+
+<div class="search-container">
+    <div class="search-input-container">
+        <input type="text" id="searchInput" placeholder="Оберіть предмет..." onkeyup="searchSubjects()">
+        <div class="search-decor-icon">
+            <img src="{% static 'img/search-ico.png' %}" alt="Search Icon">
+        </div>
+    </div>
+</div>
+
+<div class="my-school-container">
+    <div class="subjects-list" id="subjectList">
+        {% for subject in subjects %}
+            <div class="subject-item" data-subject-name="{{ subject }}">
+                <div class="subject-icon">
+                    <img src="{% static 'img/reports-ico.png' %}" alt="Subject Icon">
+                </div>
+                <div class="subject-details">
+                    <div class="subject-name">{{ subject }}</div>
+                </div>
+                <div class="subject-actions">
+                    <form method="GET" action="{% url 'view_class_report' %}">
+                        <input type="hidden" name="class_name" value="{{ selected_class }}">
+                        <input type="hidden" name="subject_name" value="{{ subject }}">
+                        <button type="submit" class="view-btn">Переглянути</button>
+                    </form>
+                </div>
+            </div>
+        {% empty %}
+            <p>У вас ще немає предметів</p>
+        {% endfor %}
+    </div>
+</div>
+
+<script src="{% static 'js/searchSubjects.js' %}"></script>
+{% endblock %}

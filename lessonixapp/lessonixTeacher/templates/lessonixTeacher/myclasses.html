@@ -1,0 +1,32 @@
+{% extends 'main.html' %}
+
+{% block content %}
+
+{% load static %}
+
+<div class="my-school-container">
+    <div class="upper-div">
+        <h1>Мої класи</h1>
+        <a href="{% url 'schoolclasses' %}">Додати</a>
+    </div>
+    <hr>
+    <div class="classes-list">
+        {% for class in classes %}
+            <div class="class-item">
+                <div class="class-icon">
+                    <img src="{% static 'img/small_class_ico.png' %}" alt="Class Icon">
+                </div>
+                <div class="class-details">
+                    <p class="class-name">{{ class.name }}</p>
+                    <p class="student-count">{{ class.students|length }} учнів</p>
+                </div>
+                <div class="class-actions">
+                    <a href="{% url 'class_detail' schoolID=school_id name=class.name %}" class="view-btn">Переглянути</a>
+                    <a href="{% url 'del_class' class.name %}" class="delete-btn">Видалити зі своїх класів</a>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock content %}

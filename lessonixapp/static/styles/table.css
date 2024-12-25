@@ -1,0 +1,86 @@
+/* Style the report table */
+.report-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.report-table th {
+    background-color: #f0f0f0; /* Light gray background for headers */
+    font-weight: bold;         /* Bold table titles */
+    text-align: center;
+    padding: 10px;
+    border: 2px solid #34D07D; /* Green table lines */
+}
+
+.report-table td {
+    padding: 8px;
+    text-align: center;
+    border: 2px solid #34D07D; /* Green table lines */
+}
+
+.report-table td.center-text {
+    text-align: center;
+}
+
+/* Table container styling */
+.report-container {
+    margin: 20px 0;
+    overflow-x: auto;
+}
+
+h2 {
+    color: #34D07D; /* Match the table lines color */
+    text-align: center;
+}
+
+button {
+    background-color: #34D07D; /* Green button */
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 10px;
+}
+
+button:hover {
+    background-color: #2eab68; /* Darker green when hovering */
+}
+
+/* Dropdown styling */
+select {
+    padding: 10px;
+    border: 2px solid #34D07D;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+.header-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.reports-header {
+    font-size: 24px;
+    margin: 0;
+}
+
+.class-icon img {
+    width: 40px; /* Adjust as needed */
+    height: 40px; /* Adjust as needed */
+}
+
+.search-container {
+    margin-top: 20px; /* Add some spacing */
+}
+
+#searchInput {
+    width: 100%;
+    padding: 10px;
+    border-radius: 25px; /* Makes the input rounded */
+    border: 1px solid #ccc; /* Light border */
+    outline: none;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Optional shadow */
+}
+

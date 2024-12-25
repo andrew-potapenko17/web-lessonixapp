@@ -1,0 +1,131 @@
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 200px;
+    height: 100vh;
+    background-color: #f4f6f9;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    z-index: 1000;
+}
+
+.navbar-content {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    justify-content: center; /* Center content vertically */
+}
+
+.links-container {
+    margin-top: auto;
+    margin-bottom: auto; /* Center the links container */
+}
+
+.main-ico {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 110px;
+}
+
+.main-ico img {
+    width: 130px;
+    height: auto;
+    border-radius: 10px;
+    transition: transform 0.3s ease;
+}
+
+.buttons-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+}
+
+.button {
+    margin: 0;
+    font-size: 14px;
+    font-weight: bold;
+    color: black; /* Black text color */
+    text-decoration: none; /* Remove underline from links */
+    transition: transform 0.4s ease; /* Smooth transition for hover effect */
+    text-align: left; /* Align text to the left */
+    padding: 10px; /* Add padding for better click area */
+}
+
+.button:hover {
+    transform: translateX(6px); /* Move to the right on hover */
+}
+
+.sidebar-bottom {
+    height: 60px; /* Height of the bottom div */
+    background-color: #E5E8EC; /* Background color for the bottom div */
+    width: 200px; /* Match the sidebar width */
+    position: fixed; /* Keep it fixed */
+    bottom: 0; /* Align to the bottom of the sidebar */
+    left: 0; /* Align to the left */
+    display: flex;
+    justify-content: flex-start; /* Align items to the start */
+    align-items: center; /* Center the content vertically */
+    padding: 0 10px; /* Add some padding */
+}
+
+.profile-container {
+    display: flex;
+    align-items: center; /* Center vertically */
+    gap: 10px; /* Space between profile image, name, and logout button */
+}
+
+.profile-img {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%; /* Make the profile image round */
+}
+
+.full-name {
+    font-size: 11px;
+    font-weight: bold;
+    margin: 0;
+}
+
+.logout-img {
+    width: 20px;
+    height: auto;
+    cursor: pointer;
+}
+
+.sidebar a {
+    text-decoration: none;
+}
+.auth-links {
+    display: flex; /* Use flexbox for layout */
+    flex-direction: column; /* Stack items vertically */
+    align-items: center; /* Center the items horizontally */
+    margin-top: auto; /* Push the auth links to the bottom of the sidebar */
+    margin-bottom: 20px; /* Space below the container */
+}
+
+.auth-link {
+    background-color: #f0f0f0; /* Background color for individual items */
+    padding: 5px; /* Padding inside each nav item */
+    border-radius: 12px; /* Rounded corners */
+    color: mint; /* Text color */
+    transition: background-color 0.3s ease; /* Transition effect for hover */
+    width: 100%; /* Make each link take the full width */
+    margin-bottom: 10px; /* Space between the two items */
+    text-align: center;
+}
+
+.auth-link a {
+    color: #3EB489;
+}
+
+.auth-link:last-child {
+    margin-bottom: 0; /* Remove margin from the last item */
+}
+
+.auth-link:hover {
+    background-color: #e0e0e0; /* Change background color on hover */
+}

@@ -1,0 +1,51 @@
+{% extends 'main.html' %}
+
+{% block content %}
+
+{% load static %}
+
+<div id="lesson-page">
+    <div class="header-container">
+        <div class="header-left">
+            <h1>Урок [LIVE]</h1>
+        </div>
+        <div class="header-right">
+            <p>Клас: {{ class_name }}</p>
+            <p>Предмет: {{ subject }}</p>
+            <p>Кабінет: {{ cabinet }}</p>
+        </div>
+    </div>
+</div>
+
+<h2>Учні</h2>
+<hr>
+
+<div id="students-list" class="students-list">
+    <!-- Firebase updates this in real-time -->
+</div>
+
+<!-- QR-код для уроку -->
+<div class="qr-code">
+    <img src="data:image/png;base64,{{ qr_code }}" alt="QR Code">
+</div>
+
+<div class="end-lesson">
+    <form action="{% url 'end_lesson' %}" method="POST">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-success">Завершити урок</button>
+    </form>
+</div>
+
+<!-- Firebase SDKs -->
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+
+<script>
+    var schoolId = "{{ school_id }}";
+    var className = "{{ class_name }}";
+</script>
+
+<script src="{% static 'js/firebase-config.js' %}"></script>
+<script src="{% static 'js/lesson.js' %}"></script>
+
+{% endblock content %}

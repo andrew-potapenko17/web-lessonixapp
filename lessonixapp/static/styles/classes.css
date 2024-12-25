@@ -1,0 +1,477 @@
+.my-school-container {
+    padding: 20px;
+}
+
+.upper-div {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.classes-list, .subjects-list {
+    display: flex;
+    flex-wrap: wrap; /* Allow items to wrap onto the next row */
+    gap: 30px; /* Consistent spacing between items */
+    margin-top: 20px;
+}
+
+/* Single row for normal class-item */
+.class-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #f0f0f0;
+    padding: 15px;
+    border-radius: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-bottom: 0; /* Reduced margin to decrease gap between rows */
+    width: 100%; /* Full width, only one item per row */
+}
+
+.class-item .class-icon img {
+    width: 100px; /* Set width */
+    height: auto;
+    background-color: transparent;
+}
+
+.class-item .class-icon {
+    margin-right: 20px; /* Space between icon and text */
+}
+
+.class-item .class-details {
+    flex-grow: 1;
+    display: flex;
+}
+
+.class-item .class-name {
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+.class-item .class-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.view-btn, .add-btn, .delete-btn {
+    padding: 8px 12px;
+    border-radius: 10px;
+    text-decoration: none;
+    color: white;
+    transition: background-color 0.3s ease;
+    border: none;
+}
+
+.view-btn {
+    background-color: #007bff; /* Blue color for the view button */
+}
+
+.view-btn:hover {
+    background-color: #0056b3;
+}
+
+.add-btn {
+    background-color: #28a745;
+}
+
+.add-btn:hover {
+    background-color: #218838; /* Darker green on hover */
+}
+
+.delete-btn {
+    background-color: #dc3545; /* Red color for the delete button */
+}
+
+.delete-btn:hover {
+    background-color: #c82333;
+}
+
+/* Student list styles */
+.students-list {
+    margin-top: 20px;
+}
+
+.student-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #f0f0f0;
+    padding: 15px;
+    border-radius: 20px;
+    margin-bottom: 25px; /* Reduced margin to decrease gap between rows */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.student-details {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.student-name {
+    font-size: 1.2em;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.student-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.student-icon img {
+    width: 60px; /* Set width for student icon */
+    height: auto; /* Maintain aspect ratio */
+}
+
+/* Two class-report items per row */
+.class-report-item {
+    display: flex; /* Use flexbox for alignment */
+    align-items: center; /* Center items vertically */
+    background-color: #f0f0f0;
+    padding: 15px;
+    border-radius: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: calc(50% - 30px); /* 2 items per row */
+    margin-bottom: 0px; /* Space between report items */
+}
+
+.class-report-item .class-icon img {
+    width: 100px; /* Set width */
+    height: auto;
+    background-color: transparent;
+}
+
+.class-report-item .class-icon {
+    margin-right: 10px;
+}
+
+.class-report-item .class-details {
+    flex-grow: 1;
+    display: flex;
+}
+
+.class-report-item .class-name {
+    font-size: 1.2em;
+    font-weight: bold;
+    margin-top: 5px;
+    margin-bottom: 2px;
+}
+
+.class-report-item .class-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.class-report-item .view-btn {
+    padding: 8px 12px;
+    border-radius: 10px;
+    text-decoration: none;
+    color: white;
+    background-color: #007bff;
+    transition: background-color 0.3s ease;
+    border: none;
+}
+
+.class-report-item .view-btn:hover {
+    background-color: #0056b3;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+    .class-item,
+    .class-report-item {
+        width: 100%; /* Stack items vertically on smaller screens */
+    }
+}
+.class-icon img {
+    width: 50px; /* Adjust the width as needed */
+    height: auto; /* Maintain aspect ratio */
+}
+
+.header-container {
+    display: flex;
+    justify-content: center; /* Center the header */
+    margin-bottom: 20px; /* Add space below the header */
+}
+
+.reports-header-container {
+    display: flex; /* Use flexbox for alignment */
+    align-items: center; /* Center items vertically */
+    justify-content: center; /* Center items horizontally */
+    background-color: #f0f0f0; /* Background color */
+    padding: 20px; /* Add padding */
+    border-radius: 30px; /* Rounded corners */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Shadow for depth */
+    width: 90%; /* Increase width to 90% */
+    max-width: 1000px; /* Optional max width, adjust as needed */
+}
+
+.reports-header {
+    font-size: 1.5em; /* Adjust font size as needed */
+    font-weight: bold; /* Make the text bold */
+    margin-right: 10px; /* Space between text and icon */
+}
+
+.reports-icon img {
+    width: 27px; /* Set width for the icon */
+    height: auto; /* Maintain aspect ratio */
+}
+
+.classes-list .class-report-item .class-details img {
+    width: 40px; /* Set width for report item icon */
+    height: auto; /* Maintain aspect ratio */
+}
+
+.search-container {
+    display: flex; /* Use flexbox to align items */
+    justify-content: center; /* Center the search container */
+    width: 100%; /* Full width of the screen */
+    margin-top: 20px; /* Add some margin at the top */
+}
+
+.search-input-container {
+    position: relative; /* Positioning context for the icon */
+    width: 100%; /* Full width */
+    max-width: 800px; /* Optional: set a max width for larger screens */
+}
+
+.search-input-container input {
+    width: 100%; /* Full width of the input field */
+    padding: 10px 40px 10px 10px; /* Padding left for the icon */
+    border: 1px solid #ccc; /* Border for the input */
+    border-radius: 20px; /* Rounded corners */
+    background: none; /* Remove background color */
+    outline: none; /* Remove outline on focus */
+}
+
+.search-decor-icon {
+    position: absolute; /* Position the icon absolutely */
+    right: 10px; /* Position it to the right */
+    top: 50%; /* Center vertically */
+    transform: translateY(-50%); /* Adjust for exact centering */
+}
+
+.search-decor-icon img {
+    width: 30px; /* Set width for the decorative icon */
+    height: auto; /* Maintain aspect ratio */
+    background-color: transparent; /* Ensure the icon has no background */
+}
+.classes-list .class-report-item {
+    display: flex; /* Use flexbox for alignment */
+    justify-content: space-between; /* Space between items */
+    align-items: center; /* Center items vertically */
+}
+
+.class-details .class-name {
+    margin-right: 10px; /* Space between text and icon */
+    font-size: 1.2em; /* Adjust text size */
+}
+
+.class-actions {
+    margin-left: auto; /* Push actions to the right */
+}
+
+.class-icon-img {
+    width: 40px; /* Adjust the width as needed */
+    height: auto; /* Maintain aspect ratio */
+}
+
+.class-details {
+    display: flex;
+    flex-direction: column; /* Stack class name and student count vertically */
+    align-items: flex-start; /* Align text to the start of the container */
+    text-align: left; /* Make sure text is aligned left */
+}
+
+.class-name {
+    font-size: 1.2em;
+    font-weight: bold;
+    margin-bottom: 5px; /* Add some space between class name and student count */
+}
+
+.student-count {
+    font-size: 1em;
+    color: #666; /* Optional: change color for differentiation */
+}
+
+.subject-item {
+    display: flex;
+    align-items: center;
+    background-color: #f0f0f0;
+    padding: 15px;
+    border-radius: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: calc(50% - 15px); /* Two items per row with gap taken into account */
+    margin-bottom: 20px; /* Consistent bottom spacing */
+}
+
+.subject-item .subject-icon img {
+    width: 50px; /* Set width */
+    height: auto;
+    background-color: transparent;
+}
+
+.subject-item .subject-icon {
+    margin-right: 10px;
+}
+
+.subject-item .subject-details {
+    flex-grow: 1;
+    display: flex;
+}
+
+.subject-item .subject-name {
+    font-size: 1.2em;
+    font-weight: bold;
+    margin-top: 5px;
+    margin-bottom: 2px;
+}
+
+.subject-item .subject-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.subject-item .view-btn {
+    padding: 8px 12px;
+    border-radius: 10px;
+    text-decoration: none;
+    color: white;
+    background-color: #007bff;
+    transition: background-color 0.3s ease;
+    border: none;
+}
+
+.subject-item .view-btn:hover {
+    background-color: #0056b3;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+    .class-report-item,
+    .subject-item {
+        width: 100%; /* Stack items vertically on smaller screens */
+    }
+}
+
+.subject-icon img {
+    width: 25px;
+    height: auto; 
+}
+
+/* EVENTS */
+
+.event {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px;
+    margin: 10px 0;
+    border-radius: 15px;
+    background-color: #f9f9f9; /* Light background color */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    border: 1px solid #ddd; /* Light border */
+    font-family: Arial, sans-serif;
+}
+
+.event img {
+    width: 80px;
+    height: auto;
+    border-radius: 50%;
+    margin-right: 15px;
+}
+
+.event-image-topbar {
+    width: 140px;
+    height: auto;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    margin-right: 15px;
+}
+
+.event-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.event-content p {
+    margin: 0;
+    padding: 0;
+}
+
+.event-content .event-name-time {
+    font-weight: bold;
+    font-size: 16px;
+    color: #333;
+}
+
+.event-name-time-topbar {
+    font-weight: bold;
+    font-size: 23px;
+    color: #333;
+}
+
+.event-content .event-started {
+    font-size: 14px;
+    color: #666;
+}
+
+.event-started-topbar {
+    font-size: 17px;
+    color: #666;
+}
+
+.event-button {
+    background-color: #007BFF; /* Primary button color */
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+    text-decoration: none; 
+}
+
+.event-button:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+}
+
+.person {
+    display: flex;
+    align-items: center;
+    background-color: #f9f9f9;
+    padding: 10px 15px;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+    margin: 10px 0;
+    font-family: Arial, sans-serif;
+}
+
+.person-icon {
+    width: 40px;
+    height: 40px;
+    margin-right: 15px;
+}
+
+.person-name {
+    margin-top: 1%;
+    font-size: 16px;
+    color: #333;
+    text-decoration: none;
+}
+
+.person-name:hover {
+    color: #007bff;
+}
+
+.qr-code-event img {
+    width: 350px;
+    height: auto;
+    margin-bottom: 20px;
+}

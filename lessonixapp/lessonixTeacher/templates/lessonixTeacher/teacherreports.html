@@ -1,0 +1,50 @@
+{% extends 'main.html' %}
+
+{% load static %}
+
+{% block content %}
+
+<div class="header-container">
+    <div class="reports-header-container">
+        <h1 class="reports-header">Журнали класів</h1>
+        <div class="reports-icon">
+            <img src="{% static 'img/reports-ico.png' %}" alt="Class Icon">
+        </div>
+    </div>
+</div>
+
+<div class="search-container">
+    <div class="search-input-container">
+        <input type="text" id="searchInput" placeholder="Пошук звіту..." onkeyup="searchReports()">
+        <div class="search-decor-icon">
+            <img src="{% static 'img/search-ico.png' %}" alt="Search Icon">
+        </div>
+    </div>
+</div>
+
+<div class="my-school-container">
+    <div class="classes-list" id="reportList">
+        {% for report in report_names %}
+            <div class="class-report-item" data-class-name="{{ report.class_name }}">
+                <div class="class-icon">
+                    <img src="{% static 'img/small_class_ico.png' %}" alt="Class Icon">
+                </div>
+                <div class="class-details">
+                    <div class="class-name">{{ report.class_name }}</div>
+                </div>
+                <div class="class-actions">
+                    <form method="GET" action="{% url 'view_class_report' %}">
+                        <input type="hidden" name="class_name" value="{{ report.class_name }}">
+                        <button type="submit" class="view-btn">Переглянути</button>
+                    </form>
+                </div>
+            </div>
+        {% empty %}
+            <p>У вас ще немає звітів</p>
+        {% endfor %}
+    </div>
+</div>
+
+<script src="{% static 'js/searchReports.js' %}"></script>
+
+{% endblock %}

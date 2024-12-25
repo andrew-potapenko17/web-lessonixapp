@@ -1,0 +1,11 @@
+{% extends 'main.html' %}
+
+{% block content %}
+<form action="{% url 'redirect_med' student_id %}" method="POST">
+    {% csrf_token %}
+    <label for="full_name">Причина:</label>
+    <input type="text" id="reason" name="reason" required>
+    <button type="submit">Відправити</button>
+</form>
+
+{% endblock content %}

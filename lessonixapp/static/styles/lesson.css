@@ -1,0 +1,53 @@
+#lesson-page .header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border-radius: 12px;
+    background-color: #f0f0f0;
+    margin-bottom: 20px;
+}
+
+#lesson-page .header-left h1 {
+    font-size: 2.5em;
+    margin-left: 20px;
+    margin-top: 5px;
+    color: gray;
+}
+
+#lesson-page .header-right p {
+    margin: 0;
+    font-size: 1.2em;
+    color: #333;
+}
+
+h2 {
+    font-size: 1.7em;
+    color: #4CAF50;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    font-weight: 600;
+}
+
+hr {
+    border: 0;
+    height: 2px;
+    background-color: #4CAF50;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.end-lesson .btn {
+    background-color: #4CAF50; /* Green background */
+    color: white; /* White text */
+    padding: 10px 20px; /* Padding for a more prominent button */
+    font-size: 1.2em; /* Increased font size */
+    border: none; /* Remove default borders */
+    border-radius: 8px; /* Slightly rounded corners */
+    cursor: pointer; /* Change cursor on hover */
+    transition: background-color 0.3s ease; /* Smooth hover transition */
+}
+
+.end-lesson .btn:hover {
+    background-color: #45a049; /* Darker green on hover */
+}

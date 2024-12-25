@@ -1,0 +1,157 @@
+.home-container h1 {
+    opacity: 0; /* Start invisible */
+    transform: translateY(-20px); /* Slightly move it up */
+    transition: opacity 0.5s ease, transform 0.5s ease; /* Smooth transition for opacity and transform */
+}
+
+.home-container h1.show {
+    opacity: 1; /* Fully visible */
+    transform: translateY(0); /* Move to its original position */
+}
+
+.home-container .calendar-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding: 10px;
+}
+
+.home-container .calendar-square {
+    display: flex;
+    flex-direction: column; /* Stack items vertically */
+    align-items: flex-start; /* Align items to the start (top left) */
+    justify-content: flex-start; /* Align to the top */
+    width: 130px; /* Set width to 130px */
+    height: 130px; /* Set height to 130px */
+    background-color: #f0f0f0; /* Lighter background for past and future days */
+    border-radius: 12px;
+    padding: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    position: relative; /* For positioning the dot */
+    opacity: 0; /* Start invisible */
+    transform: scale(0.8); /* Start slightly smaller */
+    transition: opacity 0.5s ease, transform 0.5s ease; /* Smooth transition for opacity and transform */
+}
+
+.home-container .calendar-square.show {
+    opacity: 1; /* Fully visible */
+    transform: scale(1); /* Scale to full size */
+}
+
+.home-container .calendar-square .day-label {
+    font-size: 0.9em;
+}
+
+.home-container .calendar-square .date-label {
+    font-size: 0.8em;
+}
+
+.home-container .calendar-square.today {
+    background-color: #f0f0f0; /* Brighter background for today's square */
+    font-weight: bold; /* Optional: make the text bold */
+}
+
+.home-container .day-label {
+    margin: 0; /* Remove default margin */
+    color: #555; /* Default text color for past/future days */
+    font-weight: bold; /* Make the day name bold */
+}
+
+.home-container .date-label {
+    margin: 0; /* Remove default margin */
+    color: #555; /* Default text color for past/future days */
+}
+
+.home-container .calendar-square.today .day-label,
+.home-container .calendar-square.today .date-label {
+    color: black; /* Darker text for today's date */
+}
+
+.home-container .today-indicator {
+    position: absolute; /* Positioning it under the square */
+    bottom: -30px; /* Adjust this to position the dot */
+    left: 50%; /* Center it under the square */
+    transform: translateX(-50%); /* Align the dot to center */
+    width: 12px; /* Dot size */
+    height: 12px; /* Dot size */
+    background-color: green; /* Green dot */
+    border-radius: 50%; /* Make it a circle */
+}
+
+.home-container .flex-container {
+    display: flex; /* Use flexbox for layout */
+    justify-content: space-between; /* Space between items */
+    align-items: flex-start; /* Align items to the start */
+    margin: 50px 0; /* Increase margin to move the flex container lower */
+}
+
+.home-container .community-container {
+    width: 66%; /* Set width to 66% */
+    height: 600px; /* Set height to 800px */
+    margin-right: 20px; /* Margin to separate from schedule */
+    background-color: #f0f0f0; /* Background color for the community container */
+    padding: 20px; /* Inner padding */
+    border-radius: 12px; /* Rounded corners */
+    display: flex; /* Use flexbox for layout */
+    flex-direction: column; /* Stack items vertically */
+    justify-content: space-between; /* Space items evenly */
+}
+
+.home-container .community-container h2 {
+    font-size: 1.6em; /* Font size for the schedule title */
+    color: gray; /* Color for the schedule title */
+    text-align: center; /* Centered text */
+}
+
+.home-container .form-container {
+    display: flex; /* Use flexbox for layout */
+    align-items: center; /* Center align items vertically */
+    justify-content: space-between; /* Space items evenly */
+    margin-top: auto; /* Push the form to the bottom of the container */
+}
+
+.home-container .form-container input[type="text"] {
+    width: 70%; /* Full width */
+    padding: 12px 20px; /* Padding */
+    border-radius: 20px; /* Rounded corners */
+    border: 1px solid #ccc; /* Border */
+    box-sizing: border-box; /* Include padding and border in element's total width and height */
+    margin-right: 10px; /* Space between input and button */
+}
+
+.home-container .form-container button {
+    width: 25%; /* Adjust width for the button */
+    padding: 12px; /* Ensure button has padding */
+    border-radius: 20px; /* Match the input’s corners */
+    border: 1px solid #ccc; /* Ensure the button has a border */
+    background-color: #28a745; /* Match the button color */
+    color: white; /* Button text color */
+    cursor: pointer; /* Pointer cursor on hover */
+    transition: background-color 0.3s ease; /* Transition for hover effect */
+}
+
+.home-container .schedule-container {
+    display: flex; /* Use flexbox for layout */
+    flex-direction: column; /* Stack items vertically */
+    width: 30%; /* Adjust width to fit the layout */
+    border-radius: 12px; /* Rounded corners */
+    background-color: #f0f0f0; /* Same background color as community */
+    padding: 15px; /* Padding inside the div */
+    margin: 0; /* Remove margin for the schedule container */
+    align-items: center; /* Center items horizontally */
+}
+
+.home-container .schedule-label h2 {
+    font-size: 1.6em; /* Font size for the schedule title */
+    color: gray; /* Color for the schedule title */
+    text-align: center; /* Centered text */
+}
+
+.home-container .schedule-content p {
+    font-size: 1.1em; /* Font size for the schedule content */
+    color: gray; /* Color for the schedule content */
+    text-align: center; /* Centered text */
+}
+
+

@@ -1,0 +1,35 @@
+{% extends 'main.html' %}
+
+{% block content %}
+
+{% load static %}
+
+<div class="my-school-container">
+    <div class="upper-div">
+        <h1>Class: {{ class_name }}</h1>
+        <a href="{% url 'my_classes' %}">Back to My Classes</a>
+
+        <form method="post" action="{% url 'set_primary_class' school_id=school_id class_name=class_name %}">
+            {% csrf_token %}
+            <button type="submit" class="set-primary-btn">Set as Primary Class</button>
+        </form>
+    </div>
+    <hr>
+    <div class="students-list">
+        {% for student in students %}
+            <div class="student-item">
+                <div class="student-icon student-img">
+                    <img src="{% static 'img/student_ico.png' %}" alt="Student Icon">
+                </div>
+                <div class="student-details">
+                    <p class="student-name">{{ forloop.counter }}. {{ student.full_name }}</p>
+                </div>
+                <div class="student-actions">
+                    <a href="{% url 'student_detail' school_id=school_id student_id=student.id %}" class="view-btn">Переглянути</a>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock content %}

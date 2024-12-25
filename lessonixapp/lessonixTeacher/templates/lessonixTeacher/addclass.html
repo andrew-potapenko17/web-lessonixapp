@@ -1,0 +1,33 @@
+{% extends 'main_admin.html' %}
+
+{% block content %}
+
+{% load static %}
+
+<div class="add-class">
+    <form action = "{% url 'add_class' %}" method="POST">
+        {% csrf_token %}
+        <label for="name">Class Name:</label>
+        <input type="text" id="name" name="name" required>
+        <button type="submit">Створити клас</button>
+        <h3>Учні:</h3>
+        <a href="{% url 'add_student' %}">Додати учня</a>
+        <hr>
+        <div class="my-school-container">
+        {% for student in students %}
+        <div class="student-item">
+            <div class="student-icon student-img">
+                    <img src="{% static 'img/student_ico.png' %}" alt="Student Icon">
+                </div>
+                <div class="student-details">
+                    <p class="student-name">{{ forloop.counter }}. {{ student }}</p>
+                </div>
+            <hr>
+        </div>
+        {% empty %}
+            <p>Жодного студенту ще не було додано</p>
+        {% endfor %}
+    </form>
+</div>
+
+{% endblock content %}
