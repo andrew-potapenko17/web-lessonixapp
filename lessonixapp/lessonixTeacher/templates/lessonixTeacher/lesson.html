@@ -20,13 +20,22 @@
 <h2>Учні</h2>
 <hr>
 
-<div id="students-list" class="students-list">
-    <!-- Firebase updates this in real-time -->
+<button id="start-lesson-btn" class="start-button" onclick="openModal()">Показати QR</button>
+<div id="slm" class="modal hidden">
+    <div class="modal-content">
+        <div class="modal-header">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h1>QR уроку</h1>
+        </div>
+        <div class="qr-code">
+            <img src="data:image/png;base64,{{ qr_code }}" alt="QR Code">
+        </div>
+    </div>
 </div>
 
-<!-- QR-код для уроку -->
-<div class="qr-code">
-    <img src="data:image/png;base64,{{ qr_code }}" alt="QR Code">
+
+<div id="students-list" class="students-list">
+    <!-- Firebase updates this in real-time -->
 </div>
 
 <div class="end-lesson">

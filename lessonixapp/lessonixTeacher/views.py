@@ -1,27 +1,37 @@
-from datetime import datetime, timezone
+'''
+ Lessonix views file
+'''
+import random
+import string
+
+from . import cfg
 from io import BytesIO
-from urllib.parse import quote
+from datetime import datetime, timezone
 
 import base64
 import jwt
 import pytz
 import qrcode
-import random
-import string
+import pyrebase
 import traceback
+
+from urllib.parse import quote
 from django.contrib import messages
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.shortcuts import render, redirect
 from django.utils.dateparse import parse_datetime
 from openpyxl import Workbook
 from PIL import Image, ImageDraw
-import pyrebase
 
-from . import cfg
 
 firebase = pyrebase.initialize_app(cfg.cfg)
 auth = firebase.auth()
 db = firebase.database()
+
+
+'''
+ Authentication Function
+'''
 
 def authenticate(request):
     token = request.GET.get('token')
@@ -80,7 +90,6 @@ def authenticate(request):
         return JsonResponse({'error': f'Invalid token. Error: {str(e)}'}, status=401)
 
     
-
 def endLesson(request):
     user_id = request.session.get('user_id')
     school_id = request.session.get('school_id')
@@ -964,6 +973,11 @@ def addSubject(request):
             messages.error(request, f"Failed to add subject. Error: {str(e)}")
 
     return render(request, 'lessonixTeacher/addsubject.html')
+
+def updateLessonQr():
+    # TODO make lesson hash save to db and make qr acordinly
+    pass
+
 
 def lessonPage(request):
     # Отримуємо дані користувача та школи з сесії
