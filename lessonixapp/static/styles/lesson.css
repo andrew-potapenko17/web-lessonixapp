@@ -74,7 +74,7 @@ hr {
     border-radius: 15px;
     border: 1px solid #888;
     width: 80%;
-    max-width: 600px;
+    max-width: 650px;
     transition: transform 0.2s linear, opacity 0.2s linear; /* Use linear timing for transitions */
 }
 

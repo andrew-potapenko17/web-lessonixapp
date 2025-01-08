@@ -30,6 +30,9 @@
         <div class="qr-code">
             <img src="data:image/png;base64,{{ qr_code }}" alt="QR Code">
         </div>
+        <div id="qr-update-info">
+            <p id="countdown-text">QR code will update in 30 seconds</p> <!-- Initial text -->
+        </div>
     </div>
 </div>
 
@@ -52,9 +55,11 @@
 <script>
     var schoolId = "{{ school_id }}";
     var className = "{{ class_name }}";
+    let generateQrUrl = "{% url 'generate_qr' lessonID %}";
 </script>
 
 <script src="{% static 'js/firebase-config.js' %}"></script>
 <script src="{% static 'js/lesson.js' %}"></script>
+<script src="{% static 'js/lessonqrupdate.js' %}"></script>
 
 {% endblock content %}

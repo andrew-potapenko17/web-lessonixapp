@@ -31,4 +31,5 @@ urlpatterns = [
     path('events/', views.eventsPage, name='events'),
     path('event/<str:eventHash>/', views.singleEventPage, name='eventPage'),
     path('eventaction/<str:eventHash>/', views.eventAction, name='eventAction'),
+    path('generate_qr/<str:lessonID>/', views.generate_qr, name='generate_qr'),
 ]

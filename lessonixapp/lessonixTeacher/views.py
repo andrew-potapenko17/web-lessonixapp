@@ -100,10 +100,11 @@ def endLesson(request):
 
         # Extract class name and subject from school status
         if school_status:
-            stripped_status = school_status.strip('{}')
-            parts = stripped_status.split('} {')
-            class_name = parts[0]
-            subject = parts[1]
+            lessonID = school_status
+            lesson_data = db.child("schoollessons").child(school_id).child("lessons").child(lessonID).get().val()
+
+            subject = lesson_data.get('subject', 'Unknown')
+            class_name = lesson_data.get('class_name', 'Unknown')
         else:
             class_name = None
             subject = None
@@ -899,15 +900,27 @@ def startlessonPage(request):
             ukrainian_tz = pytz.timezone('Europe/Kiev')
             timestarted = datetime.now(pytz.utc).astimezone(ukrainian_tz).strftime('%Y-%m-%d %H:%M:%S')
 
-            school_status = f"{{{class_name}}} {{{subject}}} {{{cabinet}}}"
+            
             lessonstats_update = {
                 "class": class_name,
                 "subject": subject,
                 "cabinet": cabinet,
                 "started": timestarted  # Store the start time in Ukrainian time
             }
+
+            ukrainian_tz = pytz.timezone('Europe/Kiev')
+            date = datetime.now(pytz.utc).astimezone(ukrainian_tz).strftime('%Y-%m-%d')
+
+            lessonID = generate_qr_hash(10)
+
+            db.child("schoollessons").child(schoolID).child("lessons").child(lessonID).update({
+                        "subject": subject,
+                        "cabinet": cabinet,
+                        "date": date,
+                        "class_name": class_name,
+                    })
             
-            db.child("users").child(user_id).update({"schoolStatus": school_status})
+            db.child("users").child(user_id).update({"schoolStatus": lessonID})
             db.child("users").child(user_id).child("lessonstats").update(lessonstats_update)
             
             return redirect('lesson')
@@ -974,40 +987,17 @@ def addSubject(request):
 
     return render(request, 'lessonixTeacher/addsubject.html')
 
-def updateLessonQr():
-    # TODO make lesson hash save to db and make qr acordinly
-    pass
+def generate_qr_hash(length=10):
+    characters = string.ascii_letters + string.digits
+    return ''.join(random.choices(characters, k=length))
 
+def updateLessonQr(request, lessonID, subject, cabinet, date, class_name):
 
-def lessonPage(request):
-    # Отримуємо дані користувача та школи з сесії
-    user_id = request.session.get('user_id')
     school_id = request.session.get('school_id')
 
-    # Перевіряємо поточний статус уроку для користувача
-    school_status = db.child("users").child(user_id).get().val().get('schoolStatus')
+    qrhash = generate_qr_hash()
 
-    if school_status == "nolesson":
-        return redirect('start_lesson_page')
-
-    # Витягуємо ім'я класу, предмет і кабінет з шкільного статусу
-    if school_status:
-        stripped_status = school_status.strip('{}')
-        parts = stripped_status.split('} {')
-
-        class_name = parts[0]
-        subject = parts[1]
-        cabinet = parts[2]
-    else:
-        class_name = None
-        subject = None
-        cabinet = None
-
-    ukrainian_tz = pytz.timezone('Europe/Kiev')
-    date = datetime.now(pytz.utc).astimezone(ukrainian_tz).strftime('%Y-%m-%d')
-
-    # Створення QR-коду
-    qr_data = f"subject: {subject}\ncabinet: {cabinet}\ndate: {date}\nclass: {class_name}"
+    qr_data = f"subject: {subject}\ncabinet: {cabinet}\ndate: {date}\nclass: {class_name}\nqrhash: {qrhash}"
     qr = qrcode.QRCode(
         version=1,
         error_correction=qrcode.constants.ERROR_CORRECT_H,
@@ -1046,13 +1036,61 @@ def lessonPage(request):
     qr_img.save(buffer, format="PNG")
     qr_base64 = base64.b64encode(buffer.getvalue()).decode()
 
+    db.child("schoollessons").child(school_id).child("lessons").child(lessonID).update({
+                "hash": qrhash,
+            })
+
+    return qr_base64
+
+def generate_qr(request, lessonID):
+    # Get necessary data (subject, cabinet, date, class_name) from the database or session
+    school_id = request.session.get('school_id')
+    lesson_data = db.child("schoollessons").child(school_id).child("lessons").child(lessonID).get().val()
+
+    if not lesson_data:
+        return JsonResponse({'error': 'Lesson not found'}, status=404)
+
+    subject = lesson_data.get('subject', 'Unknown')
+    cabinet = lesson_data.get('cabinet', 'Unknown')
+    date = lesson_data.get('date', 'Unknown')
+    class_name = lesson_data.get('class_name', 'Unknown')
+
+    # Generate QR code
+    qr_base64 = updateLessonQr(request, lessonID, subject, cabinet, date, class_name)
+
+    return JsonResponse({'qr_code': qr_base64})
+
+def lessonPage(request):
+    # Отримуємо дані користувача та школи з сесії
+    user_id = request.session.get('user_id')
+    school_id = request.session.get('school_id')
+
+    # Перевіряємо поточний статус уроку для користувача
+    school_status = db.child("users").child(user_id).get().val().get('schoolStatus')
+
+    if school_status == "nolesson":
+        return redirect('start_lesson_page')
+    
+    lessonID = school_status
+
+    lesson_data = db.child("schoollessons").child(school_id).child("lessons").child(lessonID).get().val()
+
+    subject = lesson_data.get('subject', 'Unknown')
+    cabinet = lesson_data.get('cabinet', 'Unknown')
+    date = lesson_data.get('date', 'Unknown')
+    class_name = lesson_data.get('class_name', 'Unknown')
+
+    # Створення QR-коду
+    qr = updateLessonQr(request, lessonID, subject, cabinet, date, class_name)
+    
     # Додаткові дані для шаблону
     context = {
         'class_name': class_name,
         'subject': subject,
         'cabinet': cabinet,
         'school_id': school_id,
-        'qr_code': qr_base64,  # Передаємо QR-код
+        'lessonID': lessonID,
+        'qr_code': qr,  # Передаємо QR-код
     }
 
     return render(request, 'lessonixTeacher/lesson.html', context)
