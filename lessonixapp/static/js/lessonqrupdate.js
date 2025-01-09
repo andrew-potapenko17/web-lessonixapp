@@ -30,7 +30,7 @@ function updateQRCode() {
 // Update the countdown timer text
 function updateCountdownText() {
     const countdownElement = document.getElementById('countdown-text');
-    countdownElement.textContent = `QR code will update in ${countdown} seconds`;
+    countdownElement.textContent = `Оновлення QR через: ${countdown}`;
 }
 
 // Set up the interval to update the QR code

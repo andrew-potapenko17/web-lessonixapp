@@ -57,6 +57,7 @@ hr {
     justify-content: center;
     align-items: center;
     position: fixed;
+    text-align: center;
     z-index: 9999;
     left: 0;
     top: 0;
@@ -106,4 +107,8 @@ hr {
 .modal.hidden .modal-content {
     transform: translateY(100%); /* Slide down */
     opacity: 0; /* Fade out */
+}
+
+.qr-update-info p {
+    text-align: center;
 }
