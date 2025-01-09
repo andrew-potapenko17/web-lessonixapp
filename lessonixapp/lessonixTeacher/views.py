@@ -101,10 +101,12 @@ def endLesson(request):
         # Extract class name and subject from school status
         if school_status:
             lessonID = school_status
-            lesson_data = db.child("schoollessons").child(school_id).child("lessons").child(lessonID).get().val()
+            lesson_data = db.child("schoollessons").child(school_id).child(lessonID).get().val()
 
             subject = lesson_data.get('subject', 'Unknown')
             class_name = lesson_data.get('class_name', 'Unknown')
+
+            lesson_data = db.child("schoollessons").child(school_id).child(lessonID).remove()
         else:
             class_name = None
             subject = None
@@ -128,14 +130,16 @@ def endLesson(request):
                     # Update student status if not 'outschool'
                     if student_status != 'outschool':
                         new_status = 'inschool'
-                        school_status = 'nolesson'
 
                         if student_status in ['ill', 'med_home']:
                             new_status = student_status  # Keep the medical status
 
                         db.child("students").child(school_id).child(student_id).update({
                             "studentStatus": new_status,
-                            "schoolStatus": school_status
+                        })
+                    
+                    db.child("students").child(school_id).child(student_id).update({
+                            "schoolStatus": "nolesson"
                         })
 
                     # Update students list with translated status
@@ -888,13 +892,13 @@ def startlessonPage(request):
         cabinet = request.POST.get('cabinet')
         subject = request.POST.get('subject')
 
-        student_school_status = "{" + subject + "} " + "{" + cabinet + "}" 
+        lessonID = generate_qr_hash(10)
 
         students = db.child("school_classes").child(schoolID).child(class_name).child("students").get()
 
         for student in students.each():
             studentID = student.val()  # Отримуємо ID студента
-            db.child("students").child(schoolID).child(studentID).update({"schoolStatus": student_school_status})
+            db.child("students").child(schoolID).child(studentID).update({"schoolStatus": lessonID})
 
         if user_id and class_name and cabinet and subject:
             ukrainian_tz = pytz.timezone('Europe/Kiev')
@@ -911,9 +915,7 @@ def startlessonPage(request):
             ukrainian_tz = pytz.timezone('Europe/Kiev')
             date = datetime.now(pytz.utc).astimezone(ukrainian_tz).strftime('%Y-%m-%d')
 
-            lessonID = generate_qr_hash(10)
-
-            db.child("schoollessons").child(schoolID).child("lessons").child(lessonID).update({
+            db.child("schoollessons").child(schoolID).child(lessonID).update({
                         "subject": subject,
                         "cabinet": cabinet,
                         "date": date,
@@ -991,13 +993,13 @@ def generate_qr_hash(length=10):
     characters = string.ascii_letters + string.digits
     return ''.join(random.choices(characters, k=length))
 
-def updateLessonQr(request, lessonID, subject, cabinet, date, class_name):
+def updateLessonQr(request, lessonID):
 
     school_id = request.session.get('school_id')
 
     qrhash = generate_qr_hash()
 
-    qr_data = f"subject: {subject}\ncabinet: {cabinet}\ndate: {date}\nclass: {class_name}\nqrhash: {qrhash}"
+    qr_data = f"lessonID: {lessonID}\nqrhash: {qrhash}"
     qr = qrcode.QRCode(
         version=1,
         error_correction=qrcode.constants.ERROR_CORRECT_H,
@@ -1036,7 +1038,7 @@ def updateLessonQr(request, lessonID, subject, cabinet, date, class_name):
     qr_img.save(buffer, format="PNG")
     qr_base64 = base64.b64encode(buffer.getvalue()).decode()
 
-    db.child("schoollessons").child(school_id).child("lessons").child(lessonID).update({
+    db.child("schoollessons").child(school_id).child(lessonID).update({
                 "hash": qrhash,
             })
 
@@ -1045,18 +1047,13 @@ def updateLessonQr(request, lessonID, subject, cabinet, date, class_name):
 def generate_qr(request, lessonID):
     # Get necessary data (subject, cabinet, date, class_name) from the database or session
     school_id = request.session.get('school_id')
-    lesson_data = db.child("schoollessons").child(school_id).child("lessons").child(lessonID).get().val()
+    lesson_data = db.child("schoollessons").child(school_id).child(lessonID).get().val()
 
     if not lesson_data:
         return JsonResponse({'error': 'Lesson not found'}, status=404)
 
-    subject = lesson_data.get('subject', 'Unknown')
-    cabinet = lesson_data.get('cabinet', 'Unknown')
-    date = lesson_data.get('date', 'Unknown')
-    class_name = lesson_data.get('class_name', 'Unknown')
-
     # Generate QR code
-    qr_base64 = updateLessonQr(request, lessonID, subject, cabinet, date, class_name)
+    qr_base64 = updateLessonQr(request, lessonID)
 
     return JsonResponse({'qr_code': qr_base64})
 
@@ -1073,15 +1070,14 @@ def lessonPage(request):
     
     lessonID = school_status
 
-    lesson_data = db.child("schoollessons").child(school_id).child("lessons").child(lessonID).get().val()
+    lesson_data = db.child("schoollessons").child(school_id).child(lessonID).get().val()
 
     subject = lesson_data.get('subject', 'Unknown')
     cabinet = lesson_data.get('cabinet', 'Unknown')
-    date = lesson_data.get('date', 'Unknown')
     class_name = lesson_data.get('class_name', 'Unknown')
 
     # Створення QR-коду
-    qr = updateLessonQr(request, lessonID, subject, cabinet, date, class_name)
+    qr = updateLessonQr(request, lessonID)
     
     # Додаткові дані для шаблону
     context = {
