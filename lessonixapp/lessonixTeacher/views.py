@@ -49,7 +49,6 @@ def authenticate(request):
             return JsonResponse({'error': 'Token is expired'}, status=401)
 
         # Token is valid, return the decoded payload or process it as needed
-
         email = payload.get('email')
         password = payload.get('password')
 
