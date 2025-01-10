@@ -88,114 +88,6 @@ def authenticate(request):
     except jwt.InvalidTokenError as e:
         return JsonResponse({'error': f'Invalid token. Error: {str(e)}'}, status=401)
 
-    
-def endLesson(request):
-    user_id = request.session.get('user_id')
-    school_id = request.session.get('school_id')
-
-    try:
-        # Get the school status of the user
-        school_status = db.child("users").child(user_id).get().val().get('schoolStatus')
-
-        # Extract class name and subject from school status
-        if school_status:
-            lessonID = school_status
-            lesson_data = db.child("schoollessons").child(school_id).child(lessonID).get().val()
-
-            subject = lesson_data.get('subject', 'Unknown')
-            class_name = lesson_data.get('class_name', 'Unknown')
-
-            lesson_data = db.child("schoollessons").child(school_id).child(lessonID).remove()
-        else:
-            class_name = None
-            subject = None
-
-        if class_name:
-            class_info = db.child("school_classes").child(school_id).child(class_name).get().val()
-            student_ids = class_info.get('students', [])
-            students = []
-
-            # Initialize counts
-            absent_count = 0
-            ill_count = 0
-            present_count = 0
-
-            for student_id in student_ids:
-                student_detail = db.child("students").child(school_id).child(student_id).get().val()
-
-                if student_detail:
-                    student_status = student_detail.get('studentStatus')
-
-                    # Update student status if not 'outschool'
-                    if student_status != 'outschool':
-                        new_status = 'inschool'
-
-                        if student_status in ['ill', 'med_home']:
-                            new_status = student_status  # Keep the medical status
-
-                        db.child("students").child(school_id).child(student_id).update({
-                            "studentStatus": new_status,
-                        })
-                    
-                    db.child("students").child(school_id).child(student_id).update({
-                            "schoolStatus": "nolesson"
-                        })
-
-                    # Update students list with translated status
-                    status_translation = {
-                        'outschool': 'н',
-                        'inschool': 'н',
-                        'inclass': '',
-                        'wc': '',
-                        'med': '',
-                        'med_home': 'хв',
-                        'med_back': '',
-                        'ill': 'хв',
-                    }
-
-                    # Translate the status for counting
-                    translated_status = status_translation.get(student_status, "error")
-                    students.append({
-                        'id': student_id,
-                        'studentStatus': translated_status,
-                    })
-
-            # Count statuses based on translated values
-            for student in students:
-                if student['studentStatus'] == 'н':  # 'н' means absent
-                    absent_count += 1
-                elif student['studentStatus'] == 'хв':  # 'хв' means ill
-                    ill_count += 1
-                else:  # Any other status can be considered present
-                    present_count += 1
-
-            # Save student statuses and get report path
-            report_path = save_student_statuses(school_id, class_name, subject, students)
-
-            # Save lesson end time and report path
-            end_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-            db.child("users").child(user_id).child("lessonstats").update({
-                "ended": end_time,
-                "absent_count": absent_count,
-                "ill_count": ill_count,
-                "present_count": present_count,
-                "report_path": report_path,  # Save the report path
-            })
-
-        # Update user status
-        db.child("users").child(user_id).update({'schoolStatus': 'nolesson'})
-
-        # Update daily statistics
-        daily_stats = db.child("users").child(user_id).child("dailystats").get().val() or {}
-        lessons_completed = daily_stats.get('lessonscompleted', 0) + 1
-        db.child("users").child(user_id).child("dailystats").update({'lessonscompleted': lessons_completed})
-
-        messages.success(request, "Lesson ended successfully.")
-    except Exception as e:
-        print(f"Error in endLesson: {e}")
-        messages.error(request, f"Failed to end the lesson. Error: {str(e)}")
-
-    return redirect('lesson_completed')
 
 
 def save_student_statuses(school_id, class_name, subject, students):
@@ -1089,6 +981,115 @@ def lessonPage(request):
     }
 
     return render(request, 'lessonixTeacher/lesson.html', context)
+
+
+def endLesson(request):
+    user_id = request.session.get('user_id')
+    school_id = request.session.get('school_id')
+
+    try:
+        # Get the school status of the user
+        school_status = db.child("users").child(user_id).get().val().get('schoolStatus')
+
+        # Extract class name and subject from school status
+        if school_status:
+            lessonID = school_status
+            lesson_data = db.child("schoollessons").child(school_id).child(lessonID).get().val()
+
+            subject = lesson_data.get('subject', 'Unknown')
+            class_name = lesson_data.get('class_name', 'Unknown')
+
+            lesson_data = db.child("schoollessons").child(school_id).child(lessonID).remove()
+        else:
+            class_name = None
+            subject = None
+
+        if class_name:
+            class_info = db.child("school_classes").child(school_id).child(class_name).get().val()
+            student_ids = class_info.get('students', [])
+            students = []
+
+            # Initialize counts
+            absent_count = 0
+            ill_count = 0
+            present_count = 0
+
+            for student_id in student_ids:
+                student_detail = db.child("students").child(school_id).child(student_id).get().val()
+
+                if student_detail:
+                    student_status = student_detail.get('studentStatus')
+
+                    # Update student status if not 'outschool'
+                    if student_status != 'outschool':
+                        new_status = 'inschool'
+
+                        if student_status in ['ill', 'med_home']:
+                            new_status = student_status  # Keep the medical status
+
+                        db.child("students").child(school_id).child(student_id).update({
+                            "studentStatus": new_status,
+                        })
+                    
+                    db.child("students").child(school_id).child(student_id).update({
+                            "schoolStatus": "nolesson"
+                        })
+
+                    # Update students list with translated status
+                    status_translation = {
+                        'outschool': 'н',
+                        'inschool': 'н',
+                        'inclass': '',
+                        'wc': '',
+                        'med': '',
+                        'med_home': 'хв',
+                        'med_back': '',
+                        'ill': 'хв',
+                    }
+
+                    # Translate the status for counting
+                    translated_status = status_translation.get(student_status, "error")
+                    students.append({
+                        'id': student_id,
+                        'studentStatus': translated_status,
+                    })
+
+            # Count statuses based on translated values
+            for student in students:
+                if student['studentStatus'] == 'н':  # 'н' means absent
+                    absent_count += 1
+                elif student['studentStatus'] == 'хв':  # 'хв' means ill
+                    ill_count += 1
+                else:  # Any other status can be considered present
+                    present_count += 1
+
+            # Save student statuses and get report path
+            report_path = save_student_statuses(school_id, class_name, subject, students)
+
+            # Save lesson end time and report path
+            end_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+            db.child("users").child(user_id).child("lessonstats").update({
+                "ended": end_time,
+                "absent_count": absent_count,
+                "ill_count": ill_count,
+                "present_count": present_count,
+                "report_path": report_path,  # Save the report path
+            })
+
+        # Update user status
+        db.child("users").child(user_id).update({'schoolStatus': 'nolesson'})
+
+        # Update daily statistics
+        daily_stats = db.child("users").child(user_id).child("dailystats").get().val() or {}
+        lessons_completed = daily_stats.get('lessonscompleted', 0) + 1
+        db.child("users").child(user_id).child("dailystats").update({'lessonscompleted': lessons_completed})
+
+        messages.success(request, "Lesson ended successfully.")
+    except Exception as e:
+        print(f"Error in endLesson: {e}")
+        messages.error(request, f"Failed to end the lesson. Error: {str(e)}")
+
+    return redirect('lesson_completed')
 
 def get_student_status(request):
     user_id = request.session['user_id']
