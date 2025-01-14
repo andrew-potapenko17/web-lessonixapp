@@ -40,15 +40,11 @@ def authenticate(request):
         return JsonResponse({'error': 'Token is required'}, status=400)
 
     try:
-        # Decode the token
         payload = jwt.decode(token, cfg.JWT_SECRET, algorithms=[cfg.JWT_ALGORITHM])
-
-        # Check if the token is expired
         exp_time = payload.get('exp')
         if not exp_time or datetime.fromtimestamp(exp_time, tz=timezone.utc) < datetime.now(timezone.utc):
             return JsonResponse({'error': 'Token is expired'}, status=401)
 
-        # Token is valid, return the decoded payload or process it as needed
         email = payload.get('email')
         password = payload.get('password')
 
