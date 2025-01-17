@@ -9,6 +9,7 @@ from io import BytesIO
 from datetime import datetime, timezone
 
 import base64
+import bcrypt
 import jwt
 import pytz
 import qrcode
@@ -33,6 +34,25 @@ db = firebase.database()
  Authentication Function
 '''
 
+def get_user_id_by_email(email):
+    try:
+        users_ref = db.reference('users')
+        users = users_ref.get()
+
+        if not users:
+            return None  # No users found
+
+        # Iterate through users to find the matching email
+        for user_id, user_data in users.items():
+            if user_data.get('email') == email:
+                return user_id  # Return user ID when email matches
+
+        return None  # Email not found
+
+    except Exception as e:
+        print(f"Error fetching user ID by email: {e}")
+        return None
+
 def authenticate(request):
     token = request.GET.get('token')
 
@@ -41,27 +61,23 @@ def authenticate(request):
 
     try:
         payload = jwt.decode(token, cfg.JWT_SECRET, algorithms=[cfg.JWT_ALGORITHM])
+
         exp_time = payload.get('exp')
         if not exp_time or datetime.fromtimestamp(exp_time, tz=timezone.utc) < datetime.now(timezone.utc):
             return JsonResponse({'error': 'Token is expired'}, status=401)
 
         email = payload.get('email')
-        password = payload.get('password')
 
-        try:
-            user = auth.sign_in_with_email_and_password(email, password)
-            session_id = user['idToken']
-            user_id = user['localId']
+        user_id = get_user_id_by_email(email)
+        user_data = db.child("users").child(user_id).get().val()
 
-            user_data = db.child("users").child(user_id).get().val()
-            if user_data:
-                full_name = user_data.get('full_name', 'Unknown')
-                school_id = user_data.get('school_id', '0')
-                classes = user_data.get('classes', {})
-                role = user_data.get('role', 'Unknown')
-                lvl = user_data.get('lvl', 1)
+        if user_data:
+            full_name = user_data.get('full_name', 'Unknown')
+            school_id = user_data.get('school_id', '0')
+            classes = user_data.get('classes', {})
+            role = user_data.get('role', 'Unknown')
+            lvl = user_data.get('lvl', 1)
 
-            request.session['uid'] = str(session_id)
             request.session['user_id'] = str(user_id)
             request.session['email'] = str(email)
             request.session['full_name'] = full_name
@@ -73,17 +89,14 @@ def authenticate(request):
 
             messages.success(request, "Successfully logged in")
             return redirect('home')
-        except Exception as e:
-            messages.error(request, f"Invalid credentials. Please try again. Error: {str(e)}")
-            return redirect('authenticate')
 
+        return JsonResponse({'error': 'User data not found'}, status=404)
 
     except jwt.ExpiredSignatureError:
         return JsonResponse({'error': 'Token has expired'}, status=401)
 
     except jwt.InvalidTokenError as e:
         return JsonResponse({'error': f'Invalid token. Error: {str(e)}'}, status=401)
-
 
 
 def save_student_statuses(school_id, class_name, subject, students):
