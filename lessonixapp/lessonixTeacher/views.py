@@ -36,14 +36,16 @@ db = firebase.database()
 
 def get_user_id_by_email(email):
     try:
-        users_ref = db.reference('users')
+        users_ref = db.child('users')
         users = users_ref.get()
 
         if not users:
             return None  # No users found
 
         # Iterate through users to find the matching email
-        for user_id, user_data in users.items():
+        for user in users.each():
+            user_id = user.key()
+            user_data = user.val()
             if user_data.get('email') == email:
                 return user_id  # Return user ID when email matches
 
@@ -78,6 +80,7 @@ def authenticate(request):
             role = user_data.get('role', 'Unknown')
             lvl = user_data.get('lvl', 1)
 
+            request.session['uid'] = str(user_id)
             request.session['user_id'] = str(user_id)
             request.session['email'] = str(email)
             request.session['full_name'] = full_name
