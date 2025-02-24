@@ -794,6 +794,7 @@ def startlessonPage(request):
         class_name = request.POST.get('class')
         cabinet = request.POST.get('cabinet')
         subject = request.POST.get('subject')
+        
 
         lessonID = generate_qr_hash(10)
 
@@ -827,6 +828,12 @@ def startlessonPage(request):
             
             db.child("users").child(user_id).update({"schoolStatus": lessonID})
             db.child("users").child(user_id).child("lessonstats").update(lessonstats_update)
+
+            lessons_live = db.child("schools").child(schoolID).child("lessons_live").get().val()
+            db.child("schools").child(schoolID).update({'lessons_live': lessons_live + 1})
+
+            absent_no_reason = db.child("schools").child(schoolID).child("absent_no_reason").get().val()
+            db.child("schools").child(schoolID).update({'absent_no_reason': absent_no_reason + len(students)})
             
             return redirect('lesson')
 
@@ -1088,6 +1095,9 @@ def endLesson(request):
                 "report_path": report_path,  # Save the report path
             })
 
+            absent_no_reason = db.child("schools").child(school_id).child("absent_no_reason").get().val()
+            db.child("schools").child(school_id).update({'absent_no_reason': absent_no_reason - absent_count})
+
         # Update user status
         db.child("users").child(user_id).update({'schoolStatus': 'nolesson'})
 
@@ -1095,6 +1105,8 @@ def endLesson(request):
         daily_stats = db.child("users").child(user_id).child("dailystats").get().val() or {}
         lessons_completed = daily_stats.get('lessonscompleted', 0) + 1
         db.child("users").child(user_id).child("dailystats").update({'lessonscompleted': lessons_completed})
+        lessons_live = db.child("schools").child(school_id).child("lessons_live").get().val()
+        db.child("schools").child(school_id).update({'lessons_live': lessons_live - 1})
 
         messages.success(request, "Lesson ended successfully.")
     except Exception as e:
@@ -1166,18 +1178,31 @@ def update_student_status(request, student_id, new_status):
 
     try:
         daily_stats = db.child("users").child(user_id).child("dailystats").get().val() or {}
-        if new_status == "outschool":
-            db.child("students").child(school_id).child(student_id).update({"studentStatus": new_status, "blocked": 1})
-            studentschecked = daily_stats.get('studentschecked', 0) + 1
-            db.child("users").child(user_id).child("dailystats").update({'studentschecked': studentschecked})
-        elif new_status == "inclass":
-            db.child("students").child(school_id).child(student_id).update({"studentStatus": new_status, "blocked": 0})
-            studentschecked = daily_stats.get('studentschecked', 0) + 1
-            db.child("users").child(user_id).child("dailystats").update({'studentschecked': studentschecked})
-        else:
-            db.child("students").child(school_id).child(student_id).update({"studentStatus": new_status})
-
+        student_status = db.child("students").child(school_id).child(student_detail).child("studentStatus").get().val()
         
+        if new_status == "outschool":
+            if student_status != "outschool":
+                db.child("students").child(school_id).child(student_id).update({"studentStatus": new_status, "blocked": 1})
+                studentschecked = daily_stats.get('studentschecked', 0) + 1
+                in_school = db.child("schools").child(school_id).child("in_school").get().val()
+                db.child("schools").child(school_id).update({'in_school': in_school - 1})
+                db.child("users").child(user_id).child("dailystats").update({'studentschecked': studentschecked})
+                absent_no_reason = db.child("schools").child(school_id).child("absent_no_reason").get().val()
+                db.child("schools").child(school_id).update({'absent_no_reason': absent_no_reason + 1})
+        elif new_status == "inclass":
+            if student_status != "inclass":
+                db.child("students").child(school_id).child(student_id).update({"studentStatus": new_status, "blocked": 0})
+                studentschecked = daily_stats.get('studentschecked', 0) + 1
+                in_school = db.child("schools").child(school_id).child("in_school").get().val()
+                db.child("schools").child(school_id).update({'in_school': in_school + 1})
+                absent_no_reason = db.child("schools").child(school_id).child("absent_no_reason").get().val()
+                db.child("schools").child(school_id).update({'absent_no_reason': absent_no_reason - 1})
+                db.child("users").child(user_id).child("dailystats").update({'studentschecked': studentschecked})
+        else:
+            if new_status == "ill":
+                absent_no_reason = db.child("schools").child(school_id).child("absent_no_reason").get().val()
+                db.child("schools").child(school_id).update({'absent_no_reason': absent_no_reason - 1})
+            db.child("students").child(school_id).child(student_id).update({"studentStatus": new_status})
 
     except Exception as e:
         messages.error(request, f"Failed to update student status. Error: {str(e)}")
