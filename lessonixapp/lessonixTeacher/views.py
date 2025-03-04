@@ -832,8 +832,10 @@ def startlessonPage(request):
             lessons_live = db.child("schools").child(schoolID).child("lessons_live").get().val()
             db.child("schools").child(schoolID).update({'lessons_live': lessons_live + 1})
 
-            absent_no_reason = db.child("schools").child(schoolID).child("absent_no_reason").get().val()
-            db.child("schools").child(schoolID).update({'absent_no_reason': absent_no_reason + len(students)})
+            students_list = students.each() if students.val() else []  # Convert to list safely
+            absent_no_reason = db.child("schools").child(schoolID).child("absent_no_reason").get().val() or 0
+            db.child("schools").child(schoolID).update({'absent_no_reason': absent_no_reason + len(students_list)})
+
             
             return redirect('lesson')
 
