@@ -106,28 +106,35 @@
 
 .home-container .form-container {
     display: flex; /* Use flexbox for layout */
-    align-items: center; /* Center align items vertically */
-    justify-content: space-between; /* Space items evenly */
     margin-top: auto; /* Push the form to the bottom of the container */
+    width: 100%;
+}
+
+.home-container .form-container form{
+    width: 100%;
+    justify-content: space-between;
+    display: flex;
 }
 
 .home-container .form-container input[type="text"] {
     width: 70%; /* Full width */
+    min-width: 200px;
     padding: 12px 20px; /* Padding */
     border-radius: 20px; /* Rounded corners */
     border: 1px solid #ccc; /* Border */
     box-sizing: border-box; /* Include padding and border in element's total width and height */
-    margin-right: 10px; /* Space between input and button */
 }
 
 .home-container .form-container button {
-    width: 25%; /* Adjust width for the button */
+    width: 20%; /* Adjust width for the button */
     padding: 12px; /* Ensure button has padding */
-    border-radius: 20px; /* Match the input’s corners */
+    border-radius: 17px; /* Match the input’s corners */
     border: 1px solid #ccc; /* Ensure the button has a border */
     background-color: #28a745; /* Match the button color */
     color: white; /* Button text color */
     cursor: pointer; /* Pointer cursor on hover */
+    align-self: flex-end;
+    margin-right: 10px;
     transition: background-color 0.3s ease; /* Transition for hover effect */
 }
 
@@ -153,5 +160,3 @@
     color: gray; /* Color for the schedule content */
     text-align: center; /* Centered text */
 }
-
-

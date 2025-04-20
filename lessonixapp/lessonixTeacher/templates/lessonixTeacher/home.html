@@ -27,7 +27,7 @@
             <div class="form-container">
                 <form action="{% url 'post_message' %}" method="POST">
                     {% csrf_token %}
-                    <input type="text" name="message" placeholder="Написати в спільноту..." required />
+                    <input class="inputmessage" type="text" name="message" placeholder="Написати в спільноту..." required />
                     <button type="submit">Надіслати</button>
                 </form>
             </div>

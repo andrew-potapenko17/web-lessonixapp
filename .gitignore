@@ -1,3 +1,4 @@
 cfg.py
 firebase-config.js
-___pycache___/
+__pycache__/
+*.pyc
