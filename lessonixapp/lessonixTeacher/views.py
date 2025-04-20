@@ -450,8 +450,6 @@ def home(request):
         messages.error(request, "User not logged in. Please log in again.")
         return redirect('authenticate')
 
-    #return render(request, 'lessonixTeacher/home.html', context)
-    return render(request, 'lessonixTeacher/home.html')
     try:
         # Get messages for the specific school
         messages_data = db.child("schoolmessages").child(school_id).child("messages").get()
@@ -477,7 +475,7 @@ def home(request):
             'messagesc': messages_list,
         }
 
-        
+        return render(request, 'lessonixTeacher/home.html', context)
     except Exception as e:
         print(f"Error loading messages: {e}")
         messages.error(request, f"Failed to load messages. Error: {str(e)}")
