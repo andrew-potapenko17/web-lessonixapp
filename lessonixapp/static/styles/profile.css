@@ -66,6 +66,7 @@
 
 .class-box, .subject-box, .cabinet-box {
     display: flex;
+    flex-direction: row;
     border: 2px black solid;
     border-radius: 7px;
     width: fit-content;

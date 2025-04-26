@@ -9,7 +9,7 @@
         <a class="back-button" href="/">
             <img src="{% static 'img/arrow-left.png' %}" alt="Back Icon">
         </a>
-        <p class="teacher-title"> [ FULL NAME ] </p>
+        <p class="teacher-title"> {{ full_name }} </p>
         <div class="teacher-icon">
             <img src="{% static 'img/teacher-ico.png' %}" alt="Teacher Icon">
         </div>
@@ -21,27 +21,34 @@
         <div class="info-div">
             <div class="left-info">
                 <div class="registered-info">
-                    <p class="info"> [ REGISTRATION STATUS ] </p>
+                    <p class="info"> Зареєстрований(-а) </p>
                 </div>
                 <div class="classes-info">
-                    <p class="info"> [ CLASSES INFO ] </p>
-                    <div class="class-box">
-                        10-A
-                    </div>
+                    <p class="info"> Класи: </p>
+                    {% for class in classes.keys %}
+                        <div class="class-box">
+                            {{ class }}
+                        </div>
+                    {% endfor %}
+                    
                 </div>
             </div>
             <div class="right-info">
                 <div class="subjects-info">
-                    <p class="info"> [ SUBJECTS INFO ] </p>
-                    <div class="subject-box">
-                        Алгебрa
-                    </div>
+                    <p class="info"> Уроки: </p>
+                    {% for subject in subjects.keys %}
+                        <div class="subject-box">
+                            {{ subject }}
+                        </div>
+                    {% endfor %}
                 </div>
                 <div class="cabinets-info">
-                    <p class="info"> [ CABINETS INFO ] </p>
-                    <div class="cabinet-box">
-                        302
-                    </div>
+                    <p class="info"> Кабінети: </p>
+                    {% for cab in cabinets.keys %}
+                        <div class="cabinet-box">
+                            {{ cab }}
+                        </div>
+                    {% endfor %}
                 </div>
             </div>
         </div>

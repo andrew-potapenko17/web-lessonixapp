@@ -667,13 +667,34 @@ def add_to_your_classes(request, class_name):
 def profilePage(request, user_id):
     try:
         user_data = db.child("users").child(user_id).get().val()
-        school_name = db.child('schools').child(request.session.get('school_id')).get().val().get('school_name')
 
-        if user_data:
-            return render(request, 'lessonixTeacher/profile.html', {'school_name': school_name, 'user': user_data})
-        else:
+        if not user_data:
             messages.error(request, "User not found.")
             return redirect('home')
+
+        full_name = user_data.get("full_name")
+        subjects = user_data.get("subjects")
+        cabinets = user_data.get("cabs")
+        classes = user_data.get("classes")
+        display_name = "Unknown"
+
+        if full_name:
+            listed_name = full_name.split()
+
+            if len(listed_name) == 3:
+                display_name = f"{listed_name[0]} {listed_name[1][0]}. {listed_name[2][0]}."
+            else:
+                display_name = full_name
+
+        context = {
+            'full_name': display_name,
+            'subjects': subjects,
+            'classes': classes,
+            'cabinets': cabinets,
+        }
+
+        return render(request, 'lessonixTeacher/profile.html', context)
+    
     except Exception as e:
         messages.error(request, f"Failed to retrieve user profile. Error: {str(e)}")
         return redirect('home')
