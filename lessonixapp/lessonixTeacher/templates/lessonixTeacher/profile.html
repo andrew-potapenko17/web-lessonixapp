@@ -25,30 +25,35 @@
                 </div>
                 <div class="classes-info">
                     <p class="info"> Класи: </p>
-                    {% for class in classes.keys %}
-                        <div class="class-box">
-                            {{ class }}
-                        </div>
-                    {% endfor %}
-                    
+                    <div class="classes-info-box">
+                        {% for class in classes.keys %}
+                            <div class="class-box">
+                                {{ class }}
+                            </div>
+                        {% endfor %}
+                    </div>
                 </div>
             </div>
             <div class="right-info">
                 <div class="subjects-info">
                     <p class="info"> Уроки: </p>
-                    {% for subject in subjects.keys %}
-                        <div class="subject-box">
-                            {{ subject }}
-                        </div>
-                    {% endfor %}
+                    <div class="subjects-info-box">
+                        {% for subject in subjects.keys %}
+                            <div class="subject-box">
+                                {{ subject }}
+                            </div>
+                        {% endfor %}
+                    </div>
                 </div>
                 <div class="cabinets-info">
                     <p class="info"> Кабінети: </p>
-                    {% for cab in cabinets.keys %}
-                        <div class="cabinet-box">
-                            {{ cab }}
-                        </div>
-                    {% endfor %}
+                    <div class="cabinets-info-box">
+                        {% for cab in cabinets.keys %}
+                            <div class="cabinet-box">
+                                {{ cab }}
+                            </div>
+                        {% endfor %}
+                    </div>
                 </div>
             </div>
         </div>

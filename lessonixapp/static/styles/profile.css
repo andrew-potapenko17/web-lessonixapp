@@ -60,6 +60,16 @@
     margin-bottom: 7px;
 }
 
+.registered-info {
+    margin-bottom: 20px;
+}
+
+.classes-info-box, .subjects-info-box, .cabinets-info-box {
+    display: flex;
+    flex-direction: row;
+    gap: 15px;
+}
+
 .subjects-info {
     margin-bottom: 20px;
 }
