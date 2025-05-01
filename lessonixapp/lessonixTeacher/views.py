@@ -924,10 +924,28 @@ def generate_qr_hash(length=10):
     characters = string.ascii_letters + string.digits
     return ''.join(random.choices(characters, k=length))
 
+def addImage(qr):
+    qr_img = qr.make_image(fill="black", back_color="white").convert("RGB")
+
+    # Draw white square in center
+    draw = ImageDraw.Draw(qr_img)
+    square_size = 150
+    square_x0 = (qr_img.size[0] - square_size) // 2
+    square_y0 = (qr_img.size[1] - square_size) // 2
+    square_x1 = square_x0 + square_size
+    square_y1 = square_y0 + square_size
+    draw.rectangle([square_x0, square_y0, square_x1, square_y1], fill="white")
+
+    # Load overlay image and paste in center
+    overlay_image = Image.open("static/img/qr-base.png").convert("RGBA")
+    overlay_x = square_x0 + (square_size - overlay_image.size[0]) // 2
+    overlay_y = square_y0 + (square_size - overlay_image.size[1]) // 2
+    qr_img.paste(overlay_image, (overlay_x, overlay_y), overlay_image)
+
+    return qr_img
+
 def updateLessonQr(request, lessonID):
-
     school_id = request.session.get('school_id')
-
     qrhash = generate_qr_hash()
 
     qr_data = f"lessonID: {lessonID}\nqrhash: {qrhash}"
@@ -939,39 +957,18 @@ def updateLessonQr(request, lessonID):
     )
     qr.add_data(qr_data)
     qr.make(fit=True)
-    qr_img = qr.make_image(fill="black", back_color="white").convert("RGB")
 
-    # Додаємо білий квадрат 150x150 у центрі QR-коду
-    draw = ImageDraw.Draw(qr_img)
-    
-    # Параметри для білого квадрата (150x150)
-    square_size = 150
-    square_x0 = (qr_img.size[0] - square_size) // 2
-    square_y0 = (qr_img.size[1] - square_size) // 2
-    square_x1 = square_x0 + square_size
-    square_y1 = square_y0 + square_size
+    # Отримуємо зображення на QR
+    qr_img = addImage(qr)
 
-    # Малюємо білий квадрат
-    draw.rectangle([square_x0, square_y0, square_x1, square_y1], fill="white")
-
-    # Завантажуємо зображення для вставки в центр
-    overlay_image = Image.open("static/img/qr-base.png").convert("RGBA")
-
-    # Вираховуємо позицію для вставки зображення в центр
-    overlay_x = square_x0 + (square_size - overlay_image.size[0]) // 2
-    overlay_y = square_y0 + (square_size - overlay_image.size[1]) // 2
-
-    # Накладаємо зображення
-    qr_img.paste(overlay_image, (overlay_x, overlay_y), overlay_image)
-
-    # Перетворення зображення QR-коду у формат base64 для передачі в HTML
+    # Конвертуємо в base64 для HTML
     buffer = BytesIO()
     qr_img.save(buffer, format="PNG")
     qr_base64 = base64.b64encode(buffer.getvalue()).decode()
 
     db.child("schoollessons").child(school_id).child(lessonID).update({
-                "hash": qrhash,
-            })
+        "hash": qrhash,
+    })
 
     return qr_base64
 
