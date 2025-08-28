@@ -4,9 +4,9 @@
 <div class="add-student">
     <form action="{% url 'add_student' %}" method="POST">
         {% csrf_token %}
-        <label for="full_name">Фамілія та ім`я учня:</label>
+        <label for="full_name">Student's Full Name:</label>
         <input type="text" id="full_name" name="full_name" required>
-        <button type="submit">Додати учня</button>
+        <button type="submit">Add Student</button>
     </form>
 </div>
 {% endblock content %}

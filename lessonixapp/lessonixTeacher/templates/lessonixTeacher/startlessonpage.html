@@ -1,10 +1,10 @@
 {% extends 'main.html' %}
-
 {% load static %}
 
 {% block content %}
 
 <div id="start-lesson-page" class="container">
+    <!-- Header -->
     <div id="header-div" class="header-container">
         <div class="header-left">
             <h1>Панель уроків</h1>
@@ -18,34 +18,40 @@
         </div>
     </div>
 
-    <div class="flex-container"> <!-- Added a flex container for layout -->
+    <!-- Main Flex Layout -->
+    <div class="flex-container">
+
+        <!-- Statistics Section -->
         <div id="today-statistics" class="statistics-container">
             <div class="statistic-label">
                 <h1>Статистика за сьогодні</h1>
             </div>
             <div class="stats-container">
                 <div class="stat-item">
-                    <h2 id="completed-lessons">{{lessonscompleted}}</h2>
+                    <h2 id="completed-lessons">{{ lessonscompleted }}</h2>
                     <p>Уроків проведено</p>
                 </div>
                 <div class="stat-item">
-                    <h2 id="checked-in-students">{{studentschecked}}</h2>
+                    <h2 id="checked-in-students">{{ studentschecked }}</h2>
                     <p>Учнів відмічено</p>
                 </div>
             </div>
         </div>
 
-        <div id="schedule" class="schedule-container"> <!-- New Schedule Div -->
+        <!-- Schedule Section -->
+        <div id="schedule" class="schedule-container">
             <div class="schedule-label">
                 <h1>Розклад</h1>
             </div>
             <div class="schedule-content">
-                <p>Розклад недоступний</p> <!-- Schedule unavailable text -->
+                <p>Розклад недоступний</p>
             </div>
-            <button id="start-lesson-btn" class="start-button" onclick="openModal()">Розпочати урок</button> <!-- Moved the button here -->
+            <button id="start-lesson-btn" class="start-button" onclick="openModal()">Розпочати урок</button>
         </div>
+
     </div>
 
+    <!-- Start Lesson Modal -->
     <div id="slm" class="modal hidden">
         <div class="modal-content">
             <div class="modal-header">
@@ -54,6 +60,8 @@
             </div>
             <form method="post" action="{% url 'start_lesson_page' %}">
                 {% csrf_token %}
+
+                <!-- Class Selector -->
                 <div class="list-container">
                     <label for="class">Клас:
                         <img src="{% static 'img/plus-btn.png' %}" alt="Add Class" onclick="window.location.href='{% url 'schoolclasses' %}'">
@@ -64,7 +72,8 @@
                         {% endfor %}
                     </select>
                 </div>
-    
+
+                <!-- Cabinet Selector -->
                 <div class="list-container">
                     <label for="cabinet">Кабінет:
                         <img src="{% static 'img/plus-btn.png' %}" alt="Add Cabinet" onclick="window.location.href='{% url 'add_cabinet' %}'">
@@ -75,7 +84,8 @@
                         {% endfor %}
                     </select>
                 </div>
-    
+
+                <!-- Subject Selector -->
                 <div class="list-container">
                     <label for="subject">Предмет:
                         <img src="{% static 'img/plus-btn.png' %}" alt="Add Subject" onclick="window.location.href='{% url 'add_subject' %}'">
@@ -86,16 +96,17 @@
                         {% endfor %}
                     </select>
                 </div>
-    
+
                 <div class="modal-footer">
                     <button type="submit" class="start-button">Розпочати урок</button>
                 </div>
-            </form>           
+            </form>
         </div>
     </div>
-    
+
 </div>
 
+<!-- Scripts -->
 <script src="{% static 'js/startlessonpage.js' %}"></script>
 <script src="{% static 'js/startlessonpageTime.js' %}"></script>
 <script src="{% static 'js/statstransition.js' %}"></script>

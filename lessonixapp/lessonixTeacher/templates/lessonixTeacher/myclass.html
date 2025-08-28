@@ -6,7 +6,7 @@
 
 <div class="my-school-container">
     <div class="upper-div">
-        <h1>Мій клас: {{ class_name }}</h1>
+        <h1>My Class: {{ class_name }}</h1>
     </div>
     <hr>
     <div class="students-list">
@@ -19,11 +19,11 @@
                     <p class="student-name">{{ forloop.counter }}. {{ student.full_name }}</p>
                     <p class="student-status">{{ student.translated_status }}</p>
                     {% if student.med_extra %}
-                        <p class="student-med-extra">Додатково: {{ student.med_extra }}</p>
+                        <p class="student-med-extra">Additional: {{ student.med_extra }}</p>
                     {% endif %}
                 </div>
                 <div class="student-actions">
-                    <a href="{% url 'student_detail' school_id=school_id student_id=student.id %}" class="view-btn">Переглянути</a>
+                    <a href="{% url 'student_detail' school_id=school_id student_id=student.id %}" class="view-btn">View</a>
                 </div>
             </div>
         {% endfor %}

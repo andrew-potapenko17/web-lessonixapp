@@ -11,7 +11,7 @@
 
         <form method="post" action="{% url 'set_primary_class' school_id=school_id class_name=class_name %}">
             {% csrf_token %}
-            <button type="submit" class="set-primary-btn">Вказати як свій клас</button>
+            <button type="submit" class="set-primary-btn">Set as My Class</button>
         </form>
     </div>
     <hr>
@@ -25,7 +25,7 @@
                     <p class="student-name">{{ forloop.counter }}. {{ student.full_name }}</p>
                 </div>
                 <div class="student-actions">
-                    <a href="{% url 'student_detail' school_id=school_id student_id=student.id %}" class="view-btn">Переглянути</a>
+                    <a href="{% url 'student_detail' school_id=school_id student_id=student.id %}" class="view-btn">View</a>
                 </div>
             </div>
         {% endfor %}

@@ -7,7 +7,7 @@
 <div id="start-lesson-page" class="container">
     <div id="header-div" class="header-container">
         <div class="header-left">
-            <h1>Заходи</h1>
+            <h1>Events</h1>
         </div>
         <div class="header-right">
             <div id="day-date" class="flex-row">
@@ -18,19 +18,19 @@
         </div>
     </div>
 
-    <div class="flex-container"> <!-- Added a flex container for layout -->
+    <div class="flex-container">
         <div id="today-statistics" class="statistics-container">
             <div class="statistic-label">
-                <h1>Мої заходи</h1>
+                <h1>My Events</h1>
 
                 {% for event in user_events %}
                     <div class="event">
-                        <img src="{% static 'img/small_class_ico.png' %}" alt="Event Icon"> <!-- Replace with your image URL -->
+                        <img src="{% static 'img/small_class_ico.png' %}" alt="Event Icon">
                         <div class="event-content">
                             <p class="event-name-time">{{ event.name }}, {{ event.time }}</p>
                             <p class="event-started">{{ event.started }} </p>
                         </div>
-                        <a class="event-button" href="{% url 'eventPage' eventHash=event.hash %}">Перейти →</a>
+                        <a class="event-button" href="{% url 'eventPage' eventHash=event.hash %}">Go →</a>
                     </div>
                 {% endfor %}
 
@@ -38,14 +38,14 @@
             
         </div>
 
-        <div id="schedule" class="schedule-container"> <!-- New Schedule Div -->
+        <div id="schedule" class="schedule-container">
             <div class="schedule-label">
-                <h1>Розклад</h1>
+                <h1>Schedule</h1>
             </div>
             <div class="schedule-content">
-                <p>Розклад недоступний</p> <!-- Schedule unavailable text -->
+                <p>Schedule unavailable</p>
             </div>
-            <button id="start-lesson-btn" class="start-button" onclick="openModal()">Створити захід</button> <!-- Moved the button here -->
+            <button id="start-lesson-btn" class="start-button" onclick="openModal()">Create Event</button>
         </div>
     </div>
 
@@ -53,18 +53,18 @@
         <div class="modal-content">
             <div class="modal-header">
                 <span class="close" onclick="closeModal()">&times;</span>
-                <h1>Створити захід</h1>
+                <h1>Create Event</h1>
             </div>
             <form method="post" action="{% url 'events' %}">
                 {% csrf_token %}
                 <div class="list-container">
-                    <label for="class">Тема:
+                    <label for="class">Topic:
                     </label>
                     <input type="text" name="topic" placeholder="" required />
                 </div>
     
                 <div class="list-container">
-                    <label for="cabinet">Кабінет:
+                    <label for="cabinet">Cabinet:
                         <img src="{% static 'img/plus-btn.png' %}" alt="Add Cabinet" onclick="window.location.href='{% url 'add_cabinet' %}'">
                     </label>
                     <select name="cabinet" id="cabinet-select">
@@ -75,13 +75,13 @@
                 </div>
     
                 <div class="list-container">
-                    <label for="subject">Початок:
+                    <label for="subject">Start Time:
                     </label>
-                    <input type="text" name="time" placeholder="Наприклад: 18:00" required />
+                    <input type="text" name="time" placeholder="e.g., 18:00" required />
                 </div>
     
                 <div class="modal-footer">
-                    <button type="submit" class="start-button">Створити захід</button>
+                    <button type="submit" class="start-button">Create Event</button>
                 </div>
             </form>           
         </div>

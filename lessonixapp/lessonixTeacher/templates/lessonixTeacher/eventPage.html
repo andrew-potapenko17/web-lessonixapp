@@ -6,17 +6,17 @@
 
 <div id="start-lesson-page" class="container">
     <div id="header-div" class="header-container">
-        <img src="{% static 'img/small_class_ico.png' %}" alt="Event Icon" class="event-image-topbar"> <!-- Replace with your image URL -->
+        <img src="{% static 'img/small_class_ico.png' %}" alt="Event Icon" class="event-image-topbar">
         <div class="event-content">
             <p class="event-name-time-topbar">{{name}}, {{time}}</p>
             <p class="event-started-topbar">{{started}}</p>
         </div>
     </div>
 
-    <div class="flex-container"> <!-- Added a flex container for layout -->
+    <div class="flex-container">
         <div id="today-statistics" class="statistics-container">
             <div class="statistic-label">
-                <h1>Присутні</h1>
+                <h1>Present</h1>
 
                 {% for person in persons %}
                 <div class="person">
@@ -28,25 +28,24 @@
                 {% endfor %}
 
             </div>
-            
         </div>
 
-        <div id="schedule" class="schedule-container"> <!-- New Schedule Div -->
+        <div id="schedule" class="schedule-container">
             <div class="schedule-label">
-                <h1>QR для аунтифікації</h1>
+                <h1>QR for Authentication</h1>
             </div>
             <div class="schedule-content">
                 {% if started == "Триває" %}
                 <div class="qr-code-event">
                     <img src="data:image/png;base64,{{ qr_code }}" alt="QR Code">
                 </div>
-                {% elif started == "Не розпочато"%}
-                <p>Розпочніть захід для QR</p>
+                {% elif started == "Не розпочато" %}
+                <p>Start the event to generate QR</p>
                 {% else %}
-                <p>Захід завершено</p>
+                <p>Event has ended</p>
                 {% endif %}
             </div>
-            <a id="start-lesson-btn" class="start-button" href="{% url 'eventAction' eventHash=hash %}" >{{ actionButton }}</a> <!-- Moved the button here -->
+            <a id="start-lesson-btn" class="start-button" href="{% url 'eventAction' eventHash=hash %}">{{ actionButton }}</a>
         </div>
     </div>
     

@@ -7,35 +7,34 @@
 <div id="lesson-page">
     <div class="header-container">
         <div class="header-left">
-            <h1>Урок [LIVE]</h1>
+            <h1>Lesson [LIVE]</h1>
         </div>
         <div class="header-right">
-            <p>Клас: {{ class_name }}</p>
-            <p>Предмет: {{ subject }}</p>
-            <p>Кабінет: {{ cabinet }}</p>
+            <p>Class: {{ class_name }}</p>
+            <p>Subject: {{ subject }}</p>
+            <p>Cabinet: {{ cabinet }}</p>
         </div>
     </div>
 </div>
 
-<h2>Учні</h2>
+<h2>Students</h2>
 <hr>
 
-<button id="start-lesson-btn" class="start-button" onclick="openModal()">Показати QR</button>
+<button id="start-lesson-btn" class="start-button" onclick="openModal()">Show QR</button>
 <div id="slm" class="modal hidden">
     <div class="modal-content">
         <div class="modal-header">
             <span class="close" onclick="closeModal()">&times;</span>
-            <h1>QR уроку</h1>
+            <h1>Lesson QR</h1>
         </div>
         <div class="qr-code">
             <img src="data:image/png;base64,{{ qr_code }}" alt="QR Code">
         </div>
         <div id="qr-update-info">
-            <p id="countdown-text">Оновлення QR через: 30</p> <!-- Initial text -->
+            <p id="countdown-text">QR refresh in: 30</p> <!-- Initial text -->
         </div>
     </div>
 </div>
-
 
 <div id="students-list" class="students-list">
     <!-- Firebase updates this in real-time -->
@@ -44,7 +43,7 @@
 <div class="end-lesson">
     <form action="{% url 'end_lesson' %}" method="POST">
         {% csrf_token %}
-        <button type="submit" class="btn btn-success">Завершити урок</button>
+        <button type="submit" class="btn btn-success">End Lesson</button>
     </form>
 </div>
 

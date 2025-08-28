@@ -6,8 +6,8 @@
 
 <div class="my-school-container">
     <div class="upper-div">
-        <h1>Мої класи</h1>
-        <a href="{% url 'schoolclasses' %}">Додати</a>
+        <h1>My Classes</h1>
+        <a href="{% url 'schoolclasses' %}">Add</a>
     </div>
     <hr>
     <div class="classes-list">
@@ -18,11 +18,11 @@
                 </div>
                 <div class="class-details">
                     <p class="class-name">{{ class.name }}</p>
-                    <p class="student-count">{{ class.students|length }} учнів</p>
+                    <p class="student-count">{{ class.students|length }} students</p>
                 </div>
                 <div class="class-actions">
-                    <a href="{% url 'class_detail' schoolID=school_id name=class.name %}" class="view-btn">Переглянути</a>
-                    <a href="{% url 'del_class' class.name %}" class="delete-btn">Видалити зі своїх класів</a>
+                    <a href="{% url 'class_detail' schoolID=school_id name=class.name %}" class="view-btn">View</a>
+                    <a href="{% url 'del_class' class.name %}" class="delete-btn">Remove from My Classes</a>
                 </div>
             </div>
         {% endfor %}

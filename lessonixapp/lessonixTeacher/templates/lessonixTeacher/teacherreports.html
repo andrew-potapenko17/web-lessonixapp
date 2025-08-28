@@ -1,9 +1,9 @@
 {% extends 'main.html' %}
-
 {% load static %}
 
 {% block content %}
 
+<!-- Header -->
 <div class="header-container">
     <div class="reports-header-container">
         <h1 class="reports-header">Журнали класів</h1>
@@ -13,6 +13,7 @@
     </div>
 </div>
 
+<!-- Search Input -->
 <div class="search-container">
     <div class="search-input-container">
         <input type="text" id="searchInput" placeholder="Пошук звіту..." onkeyup="searchReports()">
@@ -22,6 +23,7 @@
     </div>
 </div>
 
+<!-- Reports List -->
 <div class="my-school-container">
     <div class="classes-list" id="reportList">
         {% for report in report_names %}
@@ -45,6 +47,7 @@
     </div>
 </div>
 
+<!-- Search JS -->
 <script src="{% static 'js/searchReports.js' %}"></script>
 
 {% endblock %}

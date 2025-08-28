@@ -5,15 +5,15 @@
 {% block content %}
 
 <div class="home-container">
-    <h1 id="main-title">Вітаємо в Lessonix!</h1>
+    <h1 id="main-title">Welcome to Lessonix!</h1>
 
     <div class="calendar-container" id="calendar-container">
         <!-- Calendar squares will be injected here -->
     </div>
 
-    <div class="flex-container"> <!-- New parent div for flex layout -->
+    <div class="flex-container">
         <div class="community-container">
-            <h2>Спільнота вашої школи:</h2>
+            <h2>Your School Community:</h2>
             
             <div class="messages-container">
                 {% for message in messagesc %}
@@ -27,23 +27,22 @@
             <div class="form-container">
                 <form action="{% url 'post_message' %}" method="POST">
                     {% csrf_token %}
-                    <input class="inputmessage" type="text" name="message" placeholder="Написати в спільноту..." required />
-                    <button type="submit">Надіслати</button>
+                    <input class="inputmessage" type="text" name="message" placeholder="Write to the community..." required />
+                    <button type="submit">Send</button>
                 </form>
             </div>
         </div>
 
-        <div class="schedule-container"> <!-- New Schedule Div -->
+        <div class="schedule-container">
             <div class="schedule-label">
-                <h2>Розклад</h2>
+                <h2>Schedule</h2>
             </div>
             <div class="schedule-content">
-                <p>Розклад недоступний</p> <!-- Schedule unavailable text -->
+                <p>Schedule unavailable</p>
             </div>
         </div>
     </div>
 </div>
-
 
 <script src="{% static 'js/homepageCalendar.js' %}"></script>
 

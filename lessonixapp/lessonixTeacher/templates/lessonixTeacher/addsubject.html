@@ -4,9 +4,9 @@
 <div class="add-subject">
     <form action="{% url 'add_subject' %}" method="POST">
         {% csrf_token %}
-        <label for="subject_name">Предмет:</label>
+        <label for="subject_name">Subject:</label>
         <input type="text" id="subject_name" name="subject_name" required>
-        <button type="submit">Додати предмет</button>
+        <button type="submit">Add Subject</button>
     </form>
 </div>
 {% endblock content %}

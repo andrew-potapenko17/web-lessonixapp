@@ -6,8 +6,8 @@
 
 {% if request.session.uid %}
 <div class="my-school-container">
-    <h1>Моя школа</h1>
-    <h3>{{school_name}}</h3>
+    <h1>My School</h1>
+    <h3>{{ school_name }}</h3>
     <hr>
 
     <div class="teachers-list">
@@ -15,7 +15,7 @@
             <div class="teacher-item">
                 <div class="teacher-icon">
                     {% if user.role == 'teacher' %}
-                        <img src="{% static 'img/student_ico.png' %}" alt="Student Icon">
+                        <img src="{% static 'img/student_ico.png' %}" alt="Teacher Icon">
                     {% elif user.role == 'med' %}
                         <img src="{% static 'img/med-ico.png' %}" alt="Med Icon">
                     {% endif %}
@@ -24,7 +24,7 @@
                     <p class="teacher-name">{{ user.full_name }}</p>
                 </div>
                 <div class="teacher-actions">
-                    <a href="{% url 'profile' user.user_id %}" class="view-btn">Переглянути</a>
+                    <a href="{% url 'profile' user.user_id %}" class="view-btn">View</a>
                 </div>
             </div>
         {% endfor %}
@@ -32,9 +32,9 @@
 </div>
 {% else %}
 <div class="login_please">
-    <h3>Авторизуйтесь для початку</h3>
+    <h3>Please log in to continue</h3>
     <a href="{% url 'login' %}">
-        <h2>Увійти</h2>
+        <h2>Log In</h2>
     </a>
 </div>
 {% endif %}

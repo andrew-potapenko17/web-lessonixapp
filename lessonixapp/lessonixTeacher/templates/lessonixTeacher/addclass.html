@@ -9,23 +9,23 @@
         {% csrf_token %}
         <label for="name">Class Name:</label>
         <input type="text" id="name" name="name" required>
-        <button type="submit">Створити клас</button>
-        <h3>Учні:</h3>
-        <a href="{% url 'add_student' %}">Додати учня</a>
+        <button type="submit">Create Class</button>
+        <h3>Students:</h3>
+        <a href="{% url 'add_student' %}">Add Student</a>
         <hr>
         <div class="my-school-container">
         {% for student in students %}
         <div class="student-item">
             <div class="student-icon student-img">
-                    <img src="{% static 'img/student_ico.png' %}" alt="Student Icon">
-                </div>
-                <div class="student-details">
-                    <p class="student-name">{{ forloop.counter }}. {{ student }}</p>
-                </div>
+                <img src="{% static 'img/student_ico.png' %}" alt="Student Icon">
+            </div>
+            <div class="student-details">
+                <p class="student-name">{{ forloop.counter }}. {{ student }}</p>
+            </div>
             <hr>
         </div>
         {% empty %}
-            <p>Жодного студенту ще не було додано</p>
+            <p>No students have been added yet</p>
         {% endfor %}
     </form>
 </div>

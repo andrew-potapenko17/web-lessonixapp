@@ -1,17 +1,19 @@
 {% extends 'main.html' %}
-
 {% load static %}
 
 {% block content %}
+
+<!-- Header -->
 <div class="header-container">
     <div class="reports-header-container">
-        <h1 class="reports-header">{{class_name}}</h1>
+        <h1 class="reports-header">{{ class_name }}</h1>
         <div class="reports-icon">
             <img src="{% static 'img/reports-ico.png' %}" alt="Class Icon">
         </div>
     </div>
 </div>
 
+<!-- Search Input -->
 <div class="search-container">
     <div class="search-input-container">
         <input type="text" id="searchInput" placeholder="Оберіть предмет..." onkeyup="searchSubjects()">
@@ -21,6 +23,7 @@
     </div>
 </div>
 
+<!-- Subjects List -->
 <div class="my-school-container">
     <div class="subjects-list" id="subjectList">
         {% for subject in subjects %}
@@ -45,5 +48,7 @@
     </div>
 </div>
 
+<!-- Search JS -->
 <script src="{% static 'js/searchSubjects.js' %}"></script>
+
 {% endblock %}

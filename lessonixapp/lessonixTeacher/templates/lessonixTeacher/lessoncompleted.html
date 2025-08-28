@@ -4,27 +4,27 @@
 {% block content %}
     <div class="lesson-cp-page">
         <div class="header-container">
-            <h1>Урок завершено</h1>
-            <p class="thank-you-text">Дякуємо, що користуєтесь Lessonix!</p>
+            <h1>Lesson Completed</h1>
+            <p class="thank-you-text">Thank you for using Lessonix!</p>
         </div>
 
         <div class="lesson-statistics">
-            <h2>Статистика за урок</h2>
+            <h2>Lesson Statistics</h2>
             <a id="download-txt-btn">
                 <img src="{% static 'img/save-ico.png' %}" alt="Save Icon">
             </a>
-            <p>Кабінет: <strong>{{ cabinet }}</strong></p>
-            <p>Клас: <strong>{{ class_name }}</strong></p>
-            <p>Предмет: <strong>{{ subject }}</strong></p>
-            <p>Кількість учнів, які були на уроці: <strong>{{ present_count }}</strong></p>
-            <p>Кількість учнів, які були відмічені як хворі: <strong>{{ ill_count }}</strong></p>
-            <p>Кількість учнів, які не були присутніми на уроці: <strong>{{ absent_count }}</strong></p>
-            <p><strong>Тривалість уроку:</strong> {{ duration }} </p>
+            <p>Cabinet: <strong>{{ cabinet }}</strong></p>
+            <p>Class: <strong>{{ class_name }}</strong></p>
+            <p>Subject: <strong>{{ subject }}</strong></p>
+            <p>Number of students present: <strong>{{ present_count }}</strong></p>
+            <p>Number of students marked as ill: <strong>{{ ill_count }}</strong></p>
+            <p>Number of students absent: <strong>{{ absent_count }}</strong></p>
+            <p><strong>Lesson Duration:</strong> {{ duration }} </p>
         </div>
 
         <div class="attendance-report">
             <div class="report-container">
-                <h2>Таблиця відвідуваності:</h2>
+                <h2>Attendance Table:</h2>
                 <a id="download-xlsx-btn">
                     <img src="{% static 'img/save-ico.png' %}" alt="Save Icon">
                 </a>
@@ -32,8 +32,8 @@
                     <table class="report-table">
                         <thead>
                             <tr>
-                                <th>Ім'я учня</th>
-                                <th>Статус</th>
+                                <th>Student Name</th>
+                                <th>Status</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -46,18 +46,18 @@
                         </tbody>
                     </table>
                 {% else %}
-                    <p>Немає інформації про відвідуваність.</p>
+                    <p>No attendance information available.</p>
                 {% endif %}
             </div>
         </div>
 
         <div class="lesson-logs">
-            <h2>Логи уроку</h2>
-            <p>На даний момент логи недоступні.</p>
+            <h2>Lesson Logs</h2>
+            <p>Logs are currently unavailable.</p>
         </div>
 
         <div class="go-home">
-            <a href="{% url 'home' %}" class="btn btn-primary">На головну</a>
+            <a href="{% url 'home' %}" class="btn btn-primary">Go to Home</a>
         </div>
     </div>
 

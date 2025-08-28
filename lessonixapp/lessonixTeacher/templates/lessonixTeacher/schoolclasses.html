@@ -5,7 +5,7 @@
 {% load static %}
 
 <div class="my-school-container">
-    <h1>Класи школи</h1>
+    <h1>School Classes</h1>
     <h3>{{ school_name }}</h3>
     <hr>
 
@@ -17,11 +17,11 @@
                 </div>
                 <div class="class-details">
                     <p class="class-name">{{ class.name }}</p>
-                    <p class="student-count">{{ class.students|length }} учнів</p>
+                    <p class="student-count">{{ class.students|length }} students</p>
                 </div>
                 <div class="class-actions">
-                    <a href="{% url 'class_detail' schoolID=school_id name=class.name %}" class="view-btn">Переглянути</a>
-                    <a href="{% url 'add_to_your_classes' class.name %}" class="add-btn">Додати до своїх класів</a>
+                    <a href="{% url 'class_detail' schoolID=school_id name=class.name %}" class="view-btn">View</a>
+                    <a href="{% url 'add_to_your_classes' class.name %}" class="add-btn">Add to My Classes</a>
                 </div>
             </div>
         {% endfor %}
