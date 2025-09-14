@@ -14,34 +14,34 @@
             <div class="buttons-container">
                 {% if request.session.role == "teacher" %}
                 <a href="{% url 'my_school' %}">
-                    <p class="button">Моя школа</p>
+                    <p class="button">My School</p>
                 </a>
                 <a href="{% url 'my_classes' %}">
-                    <p class="button">Класи</p>
+                    <p class="button">Classes</p>
                 </a>
                 <a href="{% url 'myclass' %}">
-                    <p class="button">Мій клас</p>
+                    <p class="button">My Class</p>
                 </a>
                 <a href="{% url 'start_lesson_page' %}">
-                    <p class="button">Уроки</p>
+                    <p class="button">Lessons</p>
                 </a>
                 <a href="{% url 'reports' %}">
-                    <p class="button">Журнали</p>
+                    <p class="button">Reports</p>
                 </a>
                 {% if request.session.lvl >= 2 %}
                 <a href="{% url 'events' %}">
-                    <p class="button">Заходи</p>
+                    <p class="button">Events</p>
                 </a>
                 {% endif %}
                 {% elif request.session.role == "med" %}
                 <a href="{% url 'my_school' %}">
-                    <p class="button">Моя школа</p>
+                    <p class="button">My School</p>
                 </a>
                 <a href="{% url 'medcab' %}">
-                    <p class="button">Мед. Кабінет</p>
+                    <p class="button">Med. Cabinet</p>
                 </a>
                 <a href="{% url 'home' %}">
-                    <p class="button">Мед. Журнал</p>
+                    <p class="button">Med. Journal</p>
                 </a>
                 {% endif %}
             </div>
@@ -62,12 +62,12 @@
         <div class="auth-links">
             <div class="auth-link">
                 <a href="{% url 'login' %}">
-                    <p>Увійти</p>
+                    <p>Login</p>
                 </a>
             </div>
             <div class="auth-link">
                 <a href="{% url 'register' %}">
-                    <p>Зареєструватись</p>
+                    <p>Register</p>
                 </a>
             </div>
         </div>
