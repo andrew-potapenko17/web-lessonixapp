@@ -2,6 +2,11 @@
 
 {% load static %}
 
+{% block css %}
+<link rel="stylesheet" type="text/css" href="{% static 'styles/classes.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'styles/startlessonpage.css' %}">
+{% endblock %}
+
 {% block content %}
 
 <div id="start-lesson-page" class="container">

@@ -1,13 +1,17 @@
 {% extends 'main.html' %}
 {% load static %}
 
+{% block css %}
+<link rel="stylesheet" type="text/css" href="{% static 'styles/startlessonpage.css' %}">
+{% endblock %}
+
 {% block content %}
 
 <div id="start-lesson-page" class="container">
     <!-- Header -->
     <div id="header-div" class="header-container">
         <div class="header-left">
-            <h1>Панель уроків</h1>
+            <h1>Lesson Panel</h1>
         </div>
         <div class="header-right">
             <div id="day-date" class="flex-row">
@@ -24,16 +28,16 @@
         <!-- Statistics Section -->
         <div id="today-statistics" class="statistics-container">
             <div class="statistic-label">
-                <h1>Статистика за сьогодні</h1>
+                <h1>Today's Statistics</h1>
             </div>
             <div class="stats-container">
                 <div class="stat-item">
                     <h2 id="completed-lessons">{{ lessonscompleted }}</h2>
-                    <p>Уроків проведено</p>
+                    <p>Lessons completed</p>
                 </div>
                 <div class="stat-item">
                     <h2 id="checked-in-students">{{ studentschecked }}</h2>
-                    <p>Учнів відмічено</p>
+                    <p>Students checked in</p>
                 </div>
             </div>
         </div>
@@ -41,12 +45,12 @@
         <!-- Schedule Section -->
         <div id="schedule" class="schedule-container">
             <div class="schedule-label">
-                <h1>Розклад</h1>
+                <h1>Schedule</h1>
             </div>
             <div class="schedule-content">
-                <p>Розклад недоступний</p>
+                <p>Schedule unavailable</p>
             </div>
-            <button id="start-lesson-btn" class="start-button" onclick="openModal()">Розпочати урок</button>
+            <button id="start-lesson-btn" class="start-button" onclick="openModal()">Start Lesson</button>
         </div>
 
     </div>
@@ -56,14 +60,14 @@
         <div class="modal-content">
             <div class="modal-header">
                 <span class="close" onclick="closeModal()">&times;</span>
-                <h1>Розпочати урок</h1>
+                <h1>Start Lesson</h1>
             </div>
             <form method="post" action="{% url 'start_lesson_page' %}">
                 {% csrf_token %}
 
                 <!-- Class Selector -->
                 <div class="list-container">
-                    <label for="class">Клас:
+                    <label for="class">Class:
                         <img src="{% static 'img/plus-btn.png' %}" alt="Add Class" onclick="window.location.href='{% url 'schoolclasses' %}'">
                     </label>
                     <select name="class" id="class-select">
@@ -75,8 +79,8 @@
 
                 <!-- Cabinet Selector -->
                 <div class="list-container">
-                    <label for="cabinet">Кабінет:
-                        <img src="{% static 'img/plus-btn.png' %}" alt="Add Cabinet" onclick="window.location.href='{% url 'add_cabinet' %}'">
+                    <label for="cabinet">Classroom:
+                        <img src="{% static 'img/plus-btn.png' %}" alt="Add Classroom" onclick="window.location.href='{% url 'add_cabinet' %}'">
                     </label>
                     <select name="cabinet" id="cabinet-select">
                         {% for cabinet in user_cabs %}
@@ -87,7 +91,7 @@
 
                 <!-- Subject Selector -->
                 <div class="list-container">
-                    <label for="subject">Предмет:
+                    <label for="subject">Subject:
                         <img src="{% static 'img/plus-btn.png' %}" alt="Add Subject" onclick="window.location.href='{% url 'add_subject' %}'">
                     </label>
                     <select name="subject" id="subject-select">
@@ -98,7 +102,7 @@
                 </div>
 
                 <div class="modal-footer">
-                    <button type="submit" class="start-button">Розпочати урок</button>
+                    <button type="submit" class="start-button">Start Lesson</button>
                 </div>
             </form>
         </div>

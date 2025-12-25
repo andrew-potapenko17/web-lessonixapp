@@ -1,12 +1,16 @@
 {% extends 'main.html' %}
 {% load static %}
 
+{% block css %}
+<link rel="stylesheet" type="text/css" href="{% static 'styles/classes.css' %}" />
+{% endblock %}
+
 {% block content %}
 
 <!-- Header -->
 <div class="header-container">
     <div class="reports-header-container">
-        <h1 class="reports-header">Журнали класів</h1>
+        <h1 class="reports-header">Class Journals</h1>
         <div class="reports-icon">
             <img src="{% static 'img/reports-ico.png' %}" alt="Class Icon">
         </div>
@@ -16,7 +20,7 @@
 <!-- Search Input -->
 <div class="search-container">
     <div class="search-input-container">
-        <input type="text" id="searchInput" placeholder="Пошук звіту..." onkeyup="searchReports()">
+        <input type="text" id="searchInput" placeholder="Search report..." onkeyup="searchReports()">
         <div class="search-decor-icon">
             <img src="{% static 'img/search-ico.png' %}" alt="Search Icon">
         </div>
@@ -37,12 +41,12 @@
                 <div class="class-actions">
                     <form method="GET" action="{% url 'view_class_report' %}">
                         <input type="hidden" name="class_name" value="{{ report.class_name }}">
-                        <button type="submit" class="view-btn">Переглянути</button>
+                        <button type="submit" class="view-btn">View</button>
                     </form>
                 </div>
             </div>
         {% empty %}
-            <p>У вас ще немає звітів</p>
+            <p>You don’t have any reports yet</p>
         {% endfor %}
     </div>
 </div>

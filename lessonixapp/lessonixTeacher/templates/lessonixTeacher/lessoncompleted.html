@@ -1,5 +1,10 @@
 {% extends 'main.html' %}
+
 {% load static %}
+
+{% block css %}
+<link rel="stylesheet" type="text/css" href="{% static 'styles/lessoncompleted.css' %}" />
+{% endblock %}
 
 {% block content %}
     <div class="lesson-cp-page">

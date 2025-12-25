@@ -1,8 +1,12 @@
 {% extends 'main.html' %}
 
-{% block content %}
-
 {% load static %}
+
+{% block css %}
+<link rel="stylesheet" type="text/css" href="{% static 'styles/teachers.css' %}" />
+{% endblock %}
+
+{% block content %}
 
 {% if request.session.uid %}
 <div class="my-school-container">

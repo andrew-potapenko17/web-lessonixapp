@@ -1,6 +1,10 @@
 {% extends 'main.html' %}
 {% load static %}
 
+{% block css %}
+<link rel="stylesheet" type="text/css" href="{% static 'styles/classes.css' %}" />
+{% endblock %}
+
 {% block content %}
 
 <!-- Header -->
@@ -16,7 +20,7 @@
 <!-- Search Input -->
 <div class="search-container">
     <div class="search-input-container">
-        <input type="text" id="searchInput" placeholder="Оберіть предмет..." onkeyup="searchSubjects()">
+        <input type="text" id="searchInput" placeholder="Select a subject..." onkeyup="searchSubjects()">
         <div class="search-decor-icon">
             <img src="{% static 'img/search-ico.png' %}" alt="Search Icon">
         </div>
@@ -38,12 +42,12 @@
                     <form method="GET" action="{% url 'view_class_report' %}">
                         <input type="hidden" name="class_name" value="{{ selected_class }}">
                         <input type="hidden" name="subject_name" value="{{ subject }}">
-                        <button type="submit" class="view-btn">Переглянути</button>
+                        <button type="submit" class="view-btn">View</button>
                     </form>
                 </div>
             </div>
         {% empty %}
-            <p>У вас ще немає предметів</p>
+            <p>You don’t have any subjects yet</p>
         {% endfor %}
     </div>
 </div>
