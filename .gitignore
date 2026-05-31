@@ -1,6 +1,6 @@
-cfg.py
 firebase-config.js
 __pycache__/
 *.pyc
 venv/
 auth-token/
+.env

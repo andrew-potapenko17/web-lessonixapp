@@ -1,6 +1,5 @@
 django
 bcrypt
-jwt
 pytz
 qrcode
 pyrebase4
@@ -8,3 +7,4 @@ openpyxl
 pillow
 setuptools
 pyjwt
+dotenv

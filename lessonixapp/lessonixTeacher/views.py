@@ -7,6 +7,7 @@ import string
 from . import cfg
 from io import BytesIO
 from datetime import datetime, timezone
+import os
 
 import base64
 import bcrypt
@@ -23,13 +24,14 @@ from django.shortcuts import render, redirect
 from django.utils.dateparse import parse_datetime
 from openpyxl import Workbook
 from PIL import Image, ImageDraw
+from dotenv import load_dotenv
 
 
 firebase = pyrebase.initialize_app(cfg.cfg)
 auth = firebase.auth()
 db = firebase.database()
 
-
+load_dotenv()
 '''
  Authentication Function
 '''
@@ -56,21 +58,23 @@ def get_user_id_by_email(email):
         return None
 
 def authenticate(request):
+    
     token = request.GET.get('token')
 
     if not token:
         return JsonResponse({'error': 'Token is required'}, status=400)
-
+    
     try:
-        payload = jwt.decode(token, cfg.JWT_SECRET, algorithms=[cfg.JWT_ALGORITHM])
+        payload = jwt.decode(token, os.getenv("JWT_SECRET"), algorithms=[os.getenv("JWT_ALGORITHM")])
 
         exp_time = payload.get('exp')
         if not exp_time or datetime.fromtimestamp(exp_time, tz=timezone.utc) < datetime.now(timezone.utc):
             return JsonResponse({'error': 'Token is expired'}, status=401)
 
         email = payload.get('email')
-
+        print("PAYLOAD:", email)
         user_id = get_user_id_by_email(email)
+        print("USER ID: ", user_id)
         user_data = db.child("users").child(user_id).get().val()
 
         if user_data:
@@ -89,17 +93,14 @@ def authenticate(request):
             request.session['students'] = []
             request.session['role'] = role
             request.session['lvl'] = lvl
-
-            messages.success(request, "Successfully logged in")
+            
             return redirect('home')
 
         return JsonResponse({'error': 'User data not found'}, status=404)
 
-    except jwt.ExpiredSignatureError:
-        return JsonResponse({'error': 'Token has expired'}, status=401)
-
-    except jwt.InvalidTokenError as e:
-        return JsonResponse({'error': f'Invalid token. Error: {str(e)}'}, status=401)
+    except Exception as e:
+        print(e)
+        return JsonResponse({'error': f'Exception: {str(e)}'}, status=401)
 
 
 def save_student_statuses(school_id, class_name, subject, students):

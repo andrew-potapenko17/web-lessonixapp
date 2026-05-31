@@ -10,7 +10,7 @@
         </div>
 
         <div class="links-container">
-            {% if request.session.uid %}
+            {% if request.session.user_id %}
             <div class="buttons-container">
                 {% if request.session.role == "teacher" %}
                 <a href="{% url 'my_school' %}">
@@ -58,20 +58,6 @@
             </div>
             {% endif %}
         </div>
-        {% if not request.session.uid %}
-        <div class="auth-links">
-            <div class="auth-link">
-                <a href="{% url 'login' %}">
-                    <p>Login</p>
-                </a>
-            </div>
-            <div class="auth-link">
-                <a href="{% url 'register' %}">
-                    <p>Register</p>
-                </a>
-            </div>
-        </div>
-        {% endif %}
     </div>
 </nav>
 
