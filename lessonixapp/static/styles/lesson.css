@@ -1,57 +1,60 @@
+/* Active lesson page — header, sections, end-lesson modal */
+
 #lesson-page .header-container {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10px;
-    border-radius: 12px;
-    background-color: #f0f0f0;
-    margin-bottom: 20px;
+    padding: 18px 24px;
+    border-radius: var(--r-lg);
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    box-shadow: var(--shadow-md);
+    backdrop-filter: blur(16px) saturate(140%);
+    margin-bottom: 24px;
 }
-
 #lesson-page .header-left h1 {
-    font-size: 2.5em;
-    margin-left: 20px;
-    margin-top: 5px;
-    color: gray;
+    font-family: var(--font-display);
+    font-size: 2.2em;
+    margin-left: 8px;
+    margin-top: 0;
+    color: var(--ink);
 }
-
-#lesson-page .header-right p {
-    margin: 0;
-    font-size: 1.2em;
-    color: #333;
-}
+#lesson-page .header-right p { margin: 0; font-size: 1.15em; color: var(--muted); }
 
 h2 {
-    font-size: 1.7em;
-    color: #4CAF50;
-    margin-bottom: 10px;
+    font-family: var(--font-display);
+    font-size: 1.5em;
+    color: var(--brand-strong);
+    margin-bottom: 12px;
     text-transform: uppercase;
+    letter-spacing: 0.02em;
     font-weight: 600;
 }
 
 hr {
     border: 0;
     height: 2px;
-    background-color: #4CAF50;
     width: 100%;
-    margin-bottom: 20px;
+    margin-bottom: 22px;
+    background-image: linear-gradient(90deg, var(--brand), var(--accent-sky), transparent);
+    border-radius: 2px;
 }
 
 .end-lesson .btn {
-    background-color: #4CAF50; /* Green background */
-    color: white; /* White text */
-    padding: 10px 20px; /* Padding for a more prominent button */
-    font-size: 1.2em; /* Increased font size */
-    border: none; /* Remove default borders */
-    border-radius: 8px; /* Slightly rounded corners */
-    cursor: pointer; /* Change cursor on hover */
-    transition: background-color 0.3s ease; /* Smooth hover transition */
+    background-image: linear-gradient(135deg, var(--brand-soft), var(--brand-strong));
+    color: #fff;
+    padding: 12px 26px;
+    font-size: 1.1em;
+    font-weight: 600;
+    border: none;
+    border-radius: var(--r-pill);
+    cursor: pointer;
+    box-shadow: var(--shadow-glow);
+    transition: transform 0.25s var(--ease), filter 0.25s var(--ease);
 }
+.end-lesson .btn:hover { transform: translateY(-2px); filter: brightness(1.04); }
 
-.end-lesson .btn:hover {
-    background-color: #45a049; /* Darker green on hover */
-}
-
+/* Modal */
 .modal {
     display: flex;
     justify-content: center;
@@ -63,52 +66,33 @@ hr {
     top: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    opacity: 0; /* Modal initially invisible */
-    visibility: hidden; /* Ensures that it's not clickable when hidden */
-    transition: opacity 0.2s linear; /* Transition for opacity with linear timing */
+    background: rgba(15, 23, 42, 0.35);
+    backdrop-filter: blur(6px);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.2s linear;
 }
-
 .modal-content {
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 15px;
-    border: 1px solid #888;
+    background: var(--glass-bg-2);
+    border: 1px solid var(--glass-border);
+    padding: 28px;
+    border-radius: var(--r-lg);
     width: 80%;
     max-width: 500px;
-    transition: transform 0.2s linear, opacity 0.2s linear; /* Use linear timing for transitions */
+    box-shadow: var(--shadow-lg);
+    backdrop-filter: blur(22px) saturate(150%);
+    transition: transform 0.2s linear, opacity 0.2s linear;
 }
-
 .modal-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 10px;
-    flex-direction: row-reverse; /* Close button will be on the right, text on the left */
+    margin-bottom: 12px;
+    flex-direction: row-reverse;
 }
+.hidden { display: none; }
+.modal.show { opacity: 1; visibility: visible; }
+.modal.show .modal-content { transform: translateY(0); opacity: 1; }
+.modal.hidden .modal-content { transform: translateY(100%); opacity: 0; }
 
-/* Hidden modal class */
-.hidden {
-    display: none;
-}
-
-.modal.show {
-    opacity: 1; /* Make the modal visible */
-    visibility: visible; /* Modal becomes interactive */
-}
-
-/* Modal content for when the modal is shown */
-.modal.show .modal-content {
-    transform: translateY(0); /* Slide up to position */
-    opacity: 1; /* Make the content visible */
-}
-
-/* Modal content for when the modal is hidden */
-.modal.hidden .modal-content {
-    transform: translateY(100%); /* Slide down */
-    opacity: 0; /* Fade out */
-}
-
-.qr-update-info p {
-    text-align: center;
-}
+.qr-update-info p { text-align: center; color: var(--muted); }

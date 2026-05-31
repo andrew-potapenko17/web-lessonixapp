@@ -1,56 +1,54 @@
-.my-school-container {
-    padding: 20px;
-}
+/* Teachers / staff list (also used by profile + myschool) */
 
-.teachers-list {
-    margin-top: 20px;
-}
+.my-school-container { padding: 8px 0; }
+
+.teachers-list { margin-top: 22px; display: flex; flex-direction: column; gap: 18px; }
 
 .teacher-item {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background-color: #f0f0f0;
-    padding: 15px;
-    border-radius: 20px;
-    margin-bottom: 30px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    gap: 16px;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    padding: 18px 22px;
+    border-radius: var(--r-lg);
+    box-shadow: var(--shadow-md);
+    backdrop-filter: blur(16px) saturate(140%);
+    -webkit-backdrop-filter: blur(16px) saturate(140%);
+    transition: transform 0.3s var(--ease), box-shadow 0.3s var(--ease), border-color 0.3s var(--ease);
+}
+.teacher-item:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+    border-color: rgba(124, 108, 240, 0.35);
 }
 
-.teacher-icon img {
-    width: 60px; /* Set width for teacher/med icon */
-    height: auto;
-    margin-right: 20px;
-    background-color: transparent;
-}
+.teacher-icon img { width: 58px; height: auto; margin-right: 18px; background-color: transparent; }
 
-.teacher-details {
-    flex-grow: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-}
-
+.teacher-details { flex-grow: 1; display: flex; flex-direction: column; justify-content: center; }
 .teacher-name {
-    font-size: 1.2em;
-    font-weight: bold;
-    margin-bottom: 5px;
+    font-family: var(--font-display);
+    font-size: 1.15em;
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: 4px;
 }
 
-.teacher-actions {
-    display: flex;
-    gap: 10px;
-}
+.teacher-actions { display: flex; gap: 10px; margin-left: auto; }
 
 .view-btn {
-    padding: 8px 12px;
-    border-radius: 10px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 9px 16px;
+    border-radius: var(--r-pill);
     text-decoration: none;
-    color: white;
-    background-color: #007bff;
-    transition: background-color 0.3s ease;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 600;
+    background-image: linear-gradient(135deg, #5eead4, var(--accent-sky));
+    box-shadow: 0 10px 24px -12px rgba(56, 189, 248, 0.7);
+    transition: transform 0.25s var(--ease), filter 0.25s var(--ease);
 }
-
-.view-btn:hover {
-    background-color: #0056b3;
-}
+.view-btn:hover { transform: translateY(-2px); filter: brightness(1.05); color: #fff; }

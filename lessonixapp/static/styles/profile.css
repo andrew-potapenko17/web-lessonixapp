@@ -1,89 +1,86 @@
+/* Teacher profile page */
+
 .teacher-profile-container {
     display: flex;
     flex-direction: column;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--r-xl);
+    box-shadow: var(--shadow-md);
+    backdrop-filter: blur(18px) saturate(140%);
+    -webkit-backdrop-filter: blur(18px) saturate(140%);
+    padding: 28px clamp(20px, 3vw, 36px);
 }
 
 .upper-div-profile {
     display: flex;
     flex: 0 0 20%;
     align-items: center;
-    margin-bottom: 30px;
+    margin-bottom: 28px;
+    padding-bottom: 22px;
+    border-bottom: 1px solid var(--hairline);
 }
 
-.back-button img{
-    width: 80px;
+.back-button img {
+    width: 56px;
     height: auto;
+    opacity: 0.7;
+    transition: transform 0.25s var(--ease), opacity 0.25s var(--ease);
 }
+.back-button img:hover { transform: translateX(-4px); opacity: 1; }
 
-.teacher-icon img{
-    margin-left: 15px;
-    width: 88px;
-    height: auto;
-}
+.teacher-icon img { margin-left: 15px; width: 84px; height: auto; }
 
-.center-div {
-    display: flex;
-    flex: 0 0 80%;
-}
+.center-div { display: flex; flex: 0 0 80%; }
 
 .teacher-title {
-    font-size: 2.5em;
+    font-family: var(--font-display);
+    font-size: 2.3em;
     margin-left: 20px;
     margin-top: 5px;
     font-weight: 700;
-    color: black;
+    letter-spacing: -0.02em;
+    color: var(--ink);
 }
 
-.profile-image {
-    display: flex;
-    flex: 0 0 30%;
-}
+.profile-image { display: flex; flex: 0 0 30%; }
+.info-div { display: flex; flex: 0 0 70%; }
+.left-info, .right-info { display: flex; flex-direction: column; flex: 0 0 50%; }
 
-.info-div {
-    display: flex;
-    flex: 0 0 70%;
-}
-
-.left-info {
-    display: flex;
-    flex-direction: column;
-    flex: 0 0 50%;
-}
-
-.right-info {
-    display: flex;
-    flex-direction: column;
-    flex: 0 0 50%;
-}
-
-.info {
-    margin-bottom: 7px;
-}
-
-.registered-info {
-    margin-bottom: 20px;
-}
+.info { margin-bottom: 8px; color: var(--body); }
+.info b, .info strong { color: var(--ink); }
+.registered-info { margin-bottom: 20px; color: var(--muted); }
 
 .classes-info-box, .subjects-info-box, .cabinets-info-box {
     display: flex;
     flex-direction: row;
-    gap: 15px;
+    flex-wrap: wrap;
+    gap: 12px;
 }
-
-.subjects-info {
-    margin-bottom: 20px;
-}
+.subjects-info { margin-bottom: 20px; }
 
 .class-box, .subject-box, .cabinet-box {
-    display: flex;
-    flex-direction: row;
-    border: 2px black solid;
-    border-radius: 7px;
-    width: fit-content;
+    display: inline-flex;
     align-items: center;
     justify-content: center;
     text-align: center;
-
-    padding: 3px;
+    background: rgba(255, 255, 255, 0.6);
+    border: 1px solid var(--hairline);
+    border-radius: var(--r-pill);
+    width: fit-content;
+    padding: 6px 16px;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--brand-strong);
+    box-shadow: var(--shadow-sm);
+    transition: transform 0.25s var(--ease), box-shadow 0.25s var(--ease);
+}
+.class-box:hover, .subject-box:hover, .cabinet-box:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
 }
 
+@media (max-width: 768px) {
+    .info-div, .center-div { flex-direction: column; }
+    .left-info, .right-info, .profile-image, .info-div { flex: 1 1 100%; }
+}

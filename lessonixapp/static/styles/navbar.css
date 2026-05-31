@@ -1,27 +1,44 @@
+/* Sidebar — frosted glass navigation rail */
 .sidebar {
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 200px;
-    height: 100vh;
-    background-color: #f4f6f9;
-    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    top: 16px;
+    left: 16px;
+    bottom: 16px;
+    width: 208px;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--r-xl);
+    box-shadow: var(--shadow-lg);
+    backdrop-filter: blur(22px) saturate(150%);
+    -webkit-backdrop-filter: blur(22px) saturate(150%);
     display: flex;
     flex-direction: column;
-    padding: 20px;
+    padding: 22px 18px;
     z-index: 1000;
+    overflow: hidden;
+}
+
+/* faint top glow accent */
+.sidebar::before {
+    content: "";
+    position: absolute;
+    inset: 0 0 auto 0;
+    height: 160px;
+    background: radial-gradient(60% 120% at 50% 0%, rgba(52, 211, 153, 0.22), transparent 70%);
+    pointer-events: none;
 }
 
 .navbar-content {
+    position: relative;
     display: flex;
     flex-direction: column;
     flex: 1;
-    justify-content: center; /* Center content vertically */
+    justify-content: center;
 }
 
 .links-container {
     margin-top: auto;
-    margin-bottom: auto; /* Center the links container */
+    margin-bottom: auto;
 }
 
 .main-ico {
@@ -29,111 +46,145 @@
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    height: 110px;
-}
-
-.navbar-title {
-    font-size: 28px;
-    font-weight: bold;
-    margin-top: -10px;
+    margin-top: 4px;
 }
 
 .main-ico img {
-    width: 130px;
+    width: 84px;
     height: auto;
-    border-radius: 10px;
-    margin-top: 50px;
-    transition: transform 0.3s ease;
+    border-radius: 20px;
+    box-shadow: var(--shadow-md);
+    transition: transform 0.4s var(--ease);
+}
+.main-ico img:hover { transform: translateY(-3px) scale(1.04); }
+
+.navbar-title {
+    font-family: var(--font-display);
+    font-size: 24px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-top: 10px;
+    background: linear-gradient(120deg, var(--brand-strong), var(--accent));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
 }
 
 .sidebar .buttons-container {
     display: flex;
     flex-direction: column;
-    gap: 1px;
+    gap: 4px;
+    margin-top: 26px;
 }
 
 .sidebar .button {
     margin: 0;
     font-size: 14px;
-    font-weight: bold;
-    color: black; /* Black text color */
-    text-decoration: none; /* Remove underline from links */
-    transition: transform 0.4s ease; /* Smooth transition for hover effect */
-    text-align: left; /* Align text to the left */
-    padding: 10px; /* Add padding for better click area */
+    font-weight: 600;
+    color: var(--body);
+    text-decoration: none;
+    text-align: left;
+    padding: 11px 14px;
+    border-radius: var(--r-md);
+    transition: color 0.25s var(--ease), background 0.25s var(--ease), transform 0.25s var(--ease);
 }
 
 .sidebar .button:hover {
-    transform: translateX(6px); /* Move to the right on hover */
+    color: var(--brand-strong);
+    background: rgba(255, 255, 255, 0.7);
+    transform: translateX(4px);
+    box-shadow: var(--shadow-sm);
 }
 
 .sidebar-bottom {
-    height: 60px; /* Height of the bottom div */
-    background-color: #E5E8EC; /* Background color for the bottom div */
-    width: 200px; /* Match the sidebar width */
-    position: fixed; /* Keep it fixed */
-    bottom: 0; /* Align to the bottom of the sidebar */
-    left: 0; /* Align to the left */
+    margin: 18px -18px -22px;
+    padding: 14px 18px;
+    background: rgba(255, 255, 255, 0.45);
+    border-top: 1px solid var(--hairline);
     display: flex;
-    justify-content: flex-start; /* Align items to the start */
-    align-items: center; /* Center the content vertically */
-    padding: 0 10px; /* Add some padding */
+    align-items: center;
 }
 
 .sidebar .profile-container {
     display: flex;
-    align-items: center; /* Center vertically */
-    gap: 10px; /* Space between profile image, name, and logout button */
+    align-items: center;
+    gap: 10px;
+    width: 100%;
 }
 
 .sidebar .profile-img {
-    width: 30px;
-    height: 30px;
-    border-radius: 50%; /* Make the profile image round */
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 2px solid var(--glass-border);
+    box-shadow: var(--shadow-sm);
+    background: #fff;
 }
 
 .sidebar .full-name {
-    font-size: 11px;
-    font-weight: bold;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--ink);
     margin: 0;
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .logout-img {
     width: 20px;
     height: auto;
     cursor: pointer;
+    opacity: 0.65;
+    transition: opacity 0.2s var(--ease), transform 0.2s var(--ease);
 }
+.logout-img:hover { opacity: 1; transform: translateX(2px); }
 
-.sidebar a {
-    text-decoration: none;
-}
+.sidebar a { text-decoration: none; }
+
+/* Logged-out auth links */
 .auth-links {
-    display: flex; /* Use flexbox for layout */
-    flex-direction: column; /* Stack items vertically */
-    align-items: center; /* Center the items horizontally */
-    margin-top: auto; /* Push the auth links to the bottom of the sidebar */
-    margin-bottom: 20px; /* Space below the container */
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+    margin-top: auto;
+    margin-bottom: 8px;
 }
 
 .auth-link {
-    background-color: #f0f0f0; /* Background color for individual items */
-    padding: 5px; /* Padding inside each nav item */
-    border-radius: 12px; /* Rounded corners */
-    color: mint; /* Text color */
-    transition: background-color 0.3s ease; /* Transition effect for hover */
-    width: 100%; /* Make each link take the full width */
-    margin-bottom: 10px; /* Space between the two items */
+    background: rgba(255, 255, 255, 0.6);
+    padding: 11px;
+    border-radius: var(--r-md);
+    border: 1px solid var(--hairline);
+    transition: background 0.25s var(--ease), transform 0.25s var(--ease), box-shadow 0.25s var(--ease);
+    width: 100%;
     text-align: center;
 }
-
-.auth-link a {
-    color: #3EB489;
-}
-
-.auth-link:last-child {
-    margin-bottom: 0; /* Remove margin from the last item */
-}
-
+.auth-link a { color: var(--brand-strong); font-weight: 600; }
 .auth-link:hover {
-    background-color: #e0e0e0; /* Change background color on hover */
+    background: #fff;
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+@media (max-width: 860px) {
+    .sidebar {
+        position: relative;
+        inset: auto;
+        width: 100%;
+        flex-direction: row;
+        align-items: center;
+        padding: 12px 16px;
+        margin-bottom: 16px;
+        border-radius: var(--r-lg);
+    }
+    .navbar-content { flex-direction: row; align-items: center; gap: 16px; width: 100%; }
+    .main-ico { flex-direction: row; gap: 10px; margin: 0; }
+    .main-ico img { width: 40px; }
+    .navbar-title { margin: 0; font-size: 20px; }
+    .links-container { margin: 0 0 0 auto; }
+    .sidebar .buttons-container { flex-direction: row; flex-wrap: wrap; margin: 0; }
+    .sidebar-bottom { margin: 0 0 0 auto; padding: 0; background: none; border: none; }
 }
