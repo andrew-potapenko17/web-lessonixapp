@@ -21,6 +21,7 @@ from .lessons import (
     generate_qr,
     lessonPage,
     lesson_completed,
+    lesson_students,
     startlessonPage,
 )
 from .profile import profilePage, student_detail
@@ -47,6 +48,7 @@ __all__ = [
     "generate_qr",
     "endLesson",
     "lesson_completed",
+    "lesson_students",
     "addCabinet",
     "addSubject",
     "teacher_reports_page",

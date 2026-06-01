@@ -1,122 +1,42 @@
+// Live lesson view — polls the backend (no Firebase).
+// `studentsUrl` is provided by lesson.html ({% url 'lesson_students' %}).
+
+const STATUS_TRANSLATION = {
+    'outschool': 'не в школі',
+    'inschool': 'не в класі',
+    'inclass': 'в класі',
+    'wc': 'в туалеті',
+    'med': 'в медпункті',
+    'med_home': 'пішов додому',
+    'med_back': 'повертається з медпункту',
+    'ill': 'Захворів',
+};
+
+function renderStudents(students) {
+    const list = document.getElementById('students-list');
+    if (!list) return;
+    list.innerHTML = students.map(function (s) {
+        const translated = STATUS_TRANSLATION[s.status] || 'Unknown';
+        return `
+            <div class="student-item" id="student-${s.id}">
+                <div class="student-icon">
+                    <img src="/static/img/student_ico.png" alt="Student Icon">
+                </div>
+                <div class="student-details">
+                    <p class="student-name">${s.full_name} (${translated})</p>
+                </div>
+                <div class="student-actions">
+                    ${getStudentActionButtons(s.status, s.id)}
+                </div>
+            </div>`;
+    }).join('');
+}
+
 function fetchStudents() {
-    firebase.database().ref(`school_classes/${schoolId}/${className}/students`).on('value', function(snapshot) {
-        console.log('Student data snapshot received:', snapshot.val());
-
-        // Clear the existing students list on the page
-        const studentsList = document.getElementById('students-list');
-        studentsList.innerHTML = '';  // Clear current list
-
-        // Create a map to store the student statuses
-        const studentsStatusMap = {};
-
-        // Iterate over each student ID from the snapshot
-        snapshot.forEach(function(childSnapshot) {
-            const studentId = childSnapshot.val(); // Get the student ID from the snapshot
-            console.log('Processing student:', studentId);
-
-            // Construct the student data path
-            const studentPath = `students/${schoolId}/${studentId}`;
-            console.log('Student data path:', studentPath); // Log the student path
-
-            // Fetch student details from the 'students' node using the student ID
-            firebase.database().ref(studentPath).once('value')
-                .then(function(studentSnapshot) {
-                    const student = studentSnapshot.val();
-                    if (student) {
-                        const fullName = student.full_name;
-                        const studentStatus = student.studentStatus;
-                        studentsStatusMap[studentId] = { fullName, studentStatus };
-
-                        // Map the student status to a translated status
-                        const statusTranslation = {
-                            'outschool': 'не в школі',
-                            'inschool': 'не в класі',
-                            'inclass': 'в класі',
-                            'wc': 'в туалеті',
-                            'med': 'в медпункті',
-                            'med_home': 'пішов додому',
-                            'med_back': 'повертається з медпункту',
-                            'ill': 'Захворів',
-                        };
-
-                        const translatedStatus = statusTranslation[studentStatus] || 'Unknown';
-
-                        // Create student item HTML and append it to the students list
-                        const studentItem = `
-                            <div class="student-item" id="student-${studentId}">
-                                <div class="student-icon">
-                                    <img src="/static/img/student_ico.png" alt="Student Icon">
-                                </div>
-                                <div class="student-details">
-                                    <p class="student-name">${fullName} (${translatedStatus})</p>
-                                </div>
-                                <div class="student-actions">
-                                    ${getStudentActionButtons(studentStatus, studentId)}
-                                </div>
-                            </div>
-                        `;
-
-                        // Append the new student item to the students list in the HTML
-                        studentsList.innerHTML += studentItem;
-                    }
-                })
-                .catch(function(error) {
-                    console.error('Error fetching student details:', error);
-                });
-        });
-
-        // Set a timer to periodically check for student status updates
-        setInterval(() => {
-            Object.keys(studentsStatusMap).forEach(studentId => {
-                const studentPath = `students/${schoolId}/${studentId}`;
-                firebase.database().ref(studentPath).once('value')
-                    .then(function(studentSnapshot) {
-                        const student = studentSnapshot.val();
-                        if (student) {
-                            const newStatus = student.studentStatus;
-                            if (newStatus !== studentsStatusMap[studentId].studentStatus) {
-                                // Update the status in the map
-                                studentsStatusMap[studentId].studentStatus = newStatus;
-
-                                // Update the display
-                                const statusTranslation = {
-                                    'outschool': 'не в школі',
-                                    'inschool': 'не в класі',
-                                    'inclass': 'в класі',
-                                    'wc': 'в туалеті',
-                                    'med': 'в медпункті',
-                                    'med_home': 'пішов додому',
-                                    'med_back': 'повертається з медпункту',
-                                    'ill': 'Захворів',
-                                };
-
-                                const translatedStatus = statusTranslation[newStatus] || 'Unknown';
-
-                                // Update the relevant student item in the HTML
-                                const studentItem = document.getElementById(`student-${studentId}`);
-                                if (studentItem) {
-                                    const nameElement = studentItem.querySelector('.student-name');
-                                    if (nameElement) {
-                                        nameElement.textContent = `${studentsStatusMap[studentId].fullName} (${translatedStatus})`;
-                                    }
-
-                                    // Update the action buttons for the student
-                                    const actionsElement = studentItem.querySelector('.student-actions');
-                                    if (actionsElement) {
-                                        actionsElement.innerHTML = getStudentActionButtons(newStatus, studentId);
-                                    }
-                                }
-                            }
-                        }
-                    })
-                    .catch(function(error) {
-                        console.error('Error fetching updated student details:', error);
-                    });
-            });
-        }, 1000); // Check every second
-    }, function(error) {
-        console.error('Error fetching student data:', error);
-    });
+    fetch(studentsUrl, { headers: { 'X-Requested-With': 'XMLHttpRequest' } })
+        .then(function (r) { return r.json(); })
+        .then(function (data) { renderStudents(data.students || []); })
+        .catch(function (error) { console.error('Error fetching students:', error); });
 }
 
 // Function to generate action buttons based on student status
@@ -165,34 +85,29 @@ function getStudentActionButtons(status, studentId) {
             `;
             break;
     }
-    
+
     return buttonsHtml;
 }
 
 function openModal() {
     const modal = document.getElementById("slm");
-    modal.classList.remove("hidden");  // Ensure it's visible
-    setTimeout(() => {
-        modal.classList.add("show");   // Add the show class to trigger animation
-    }, 10); // Small timeout to allow DOM to register the change
+    modal.classList.remove("hidden");
+    setTimeout(() => { modal.classList.add("show"); }, 10);
 }
 
 function closeModal() {
     const modal = document.getElementById("slm");
-    modal.classList.remove("show");    // Start hiding the modal
-
-    // Add a timeout to wait for the transition to complete before adding hidden
-    setTimeout(() => {
-        modal.classList.add("hidden"); // Fully hide it after the animation
-    }, 200); // Match the duration of the transition
+    modal.classList.remove("show");
+    setTimeout(() => { modal.classList.add("hidden"); }, 200);
 }
 
-window.onclick = function(event) {
+window.onclick = function (event) {
     const modal = document.getElementById('slm');
     if (event.target === modal) {
         closeModal();
     }
 };
 
-// Call the function to fetch students initially
+// Initial load + poll every 2s for live status changes.
 fetchStudents();
+setInterval(fetchStudents, 2000);

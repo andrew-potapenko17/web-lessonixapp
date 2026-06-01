@@ -2,7 +2,6 @@ django
 bcrypt
 pytz
 qrcode
-pyrebase4
 openpyxl
 pillow
 setuptools

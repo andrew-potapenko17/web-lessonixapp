@@ -15,6 +15,7 @@ urlpatterns = [
     path('student/<str:school_id>/<str:student_id>/', views.student_detail, name='student_detail'),
     path('startlesson/', views.startlessonPage, name='start_lesson_page'),
     path('lesson/', views.lessonPage, name='lesson'),
+    path('lesson_students/', views.lesson_students, name='lesson_students'),
     path('addcabinet/', views.addCabinet, name='add_cabinet'),
     path('addsubject/', views.addSubject, name='add_subject'),
     path('redirect_med/<str:student_id>/', views.redirect_to_med, name='redirect_med'),

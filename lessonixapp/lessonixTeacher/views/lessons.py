@@ -61,6 +61,12 @@ def lessonPage(request):
 
 
 @require_login
+def lesson_students(request):
+    """JSON: students of the active lesson (polled by lesson.js, replaces Firebase)."""
+    return JsonResponse({"students": lesson_service.live_students(request.user_obj, request.school)})
+
+
+@require_login
 def generate_qr(request, lessonID):
     lesson = repo.get_active_lesson(request.school, lessonID)
     if not lesson:
