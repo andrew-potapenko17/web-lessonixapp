@@ -3,7 +3,7 @@
 <nav class="sidebar">
     <div class="navbar-content">
         <div class="main-ico">
-            <a href="/">
+            <a href="{% url 'home' %}">
                 <img src="{% static 'img/tab_ico.png' %}" alt="Main Icon">
             </a>
             <p class="navbar-title">Lessonix</p>
@@ -47,11 +47,11 @@
             </div>
             <div class="sidebar-bottom">
                 <div class="profile-container">
-                    <a href="/">
+                    <a href="{% url 'home' %}">
                         <img class="profile-img" src="{% static 'img/student_ico.png' %}" alt="Profile Icon">
                     </a>
                     <p class="full-name">{{ request.session.full_name }}</p>
-                    <a href="https://lessonix.pythonanywhere.com">
+                    <a href="https://lessonix.cvv.codes/">
                         <img class="logout-img" src="{% static 'img/logout-btn.png' %}" alt="Logout Button">
                     </a>
                 </div>
