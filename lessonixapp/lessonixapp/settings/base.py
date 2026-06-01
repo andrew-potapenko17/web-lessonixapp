@@ -110,7 +110,7 @@ LESSONIX_QR_OVERLAY = str(BASE_DIR / "static" / "img" / "qr-base.png")
 #  i18n / tz
 # --------------------------------------------------------------------------- #
 LANGUAGE_CODE = "uk"
-TIME_ZONE = "Europe/Kiev"
+TIME_ZONE = "Europe/Kyiv"
 USE_I18N = True
 USE_TZ = True
 
