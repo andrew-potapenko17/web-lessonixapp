@@ -93,7 +93,7 @@ def authenticate(request):
             request.session['students'] = []
             request.session['role'] = role
             request.session['lvl'] = lvl
-            
+
             return redirect('home')
 
         return JsonResponse({'error': 'User data not found'}, status=404)
@@ -1016,6 +1016,7 @@ def lessonPage(request):
         'school_id': school_id,
         'lessonID': lessonID,
         'qr_code': qr,  # Передаємо QR-код
+        "firebase_config": cfg.cfg,
     }
 
     return render(request, 'lessonixTeacher/lesson.html', context)

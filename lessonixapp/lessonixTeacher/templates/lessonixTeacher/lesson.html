@@ -62,7 +62,19 @@
     let generateQrUrl = "{% url 'generate_qr' lessonID %}";
 </script>
 
-<script src="{% static 'js/firebase-config.js' %}"></script>
+<script>
+    const firebaseConfig = {
+        apiKey: "{{ firebase_config.apiKey }}",
+        authDomain: "{{ firebase_config.authDomain }}",
+        databaseURL: "{{ firebase_config.databaseURL }}",
+        projectId: "{{ firebase_config.projectId }}",
+        storageBucket: "{{ firebase_config.storageBucket }}",
+        messagingSenderId: "{{ firebase_config.messagingSenderId }}",
+        appId: "{{ firebase_config.appId }}"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+</script>
 <script src="{% static 'js/lesson.js' %}"></script>
 <script src="{% static 'js/lessonqrupdate.js' %}"></script>
 
